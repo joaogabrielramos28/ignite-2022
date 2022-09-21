@@ -1,7 +1,9 @@
 import { EmptyMessage } from "./components/EmptyMessage";
 import { Form } from "./components/Form";
 import { Header } from "./components/Header";
+import { Task } from "./components/Task";
 import { TaskInfo } from "./components/TaskInfo";
+import { TaskList } from "./components/TaskList";
 
 function App() {
   return (
@@ -9,7 +11,8 @@ function App() {
       <Header />
       <Form />
       <TaskInfo />
-      <EmptyMessage />
+      {/* <EmptyMessage /> */}
+      <TaskList />
     </>
   );
 }
