@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  justify-content: center;
+
+  margin-top: -30px;
+}
+
+.input {
+  width: 40rem;
+  height: 3.4rem;
+
+  margin-right: 8px;
+  padding: 1rem;
+
+  background-color: var(--gray-500);
+  color: var(--gray-100);
+
+  border: 1px solid var(--gray-700);
+
+  border-radius: 8px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 5.7rem;
+  height: 3.25rem;
+
+  background-color: var(--blue-dark);
+  color: var(--gray-100);
+
+  padding: 1rem;
+
+  border-radius: 8px;
+  border: none;
+
+  font-weight: bold;
+  font-size: 0.875rem;
+
+  cursor: pointer;
+
+  transition: background-color 0.4s;
+}
+
+.button:hover {
+  background-color: var(--blue);
+}
+
+.button svg {
+  margin-left: 8px;
+}
