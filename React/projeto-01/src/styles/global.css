@@ -3,6 +3,7 @@
     --gray-600:"#1A1A1A"
     --gray-500:"#262626"
     --gray-400:"#333333"
+    --gray-300:"#808080"
 
     --blue-dark:"#1E6F9F"
     --blue:"#4EA8DE"
@@ -10,4 +11,24 @@
     --purple-dark:"#5E60CE"
     --purple:"#8284FA"
 
+}
+
+
+*{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+   
+}
+
+body{
+    background-color: var(--gray-600);
+     -webkit-font-smoothing: antialiased;
+     color:var(--gray-300)
+}
+
+body,input,button{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
 }
