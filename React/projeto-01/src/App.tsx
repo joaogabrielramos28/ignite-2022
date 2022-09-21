@@ -11,8 +11,8 @@ function App() {
       <Header />
       <Form />
       <TaskInfo />
-      {/* <EmptyMessage /> */}
-      <TaskList />
+      <EmptyMessage />
+      {/* <TaskList /> */}
     </>
   );
 }

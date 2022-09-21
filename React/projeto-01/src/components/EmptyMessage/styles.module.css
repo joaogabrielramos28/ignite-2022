@@ -1,18 +1,25 @@
 .container {
   display: flex;
   justify-content: center;
+}
 
+.content {
+  display: flex;
   flex-direction: column;
   align-items: center;
 
-  margin-top: 4rem;
+  padding: 4rem 0;
+
+  width: 46rem;
+
+  border-top: 1px solid var(--gray-400);
 }
 
-.container img {
+.content img {
   margin-bottom: 1rem;
 }
 
-.container p {
+.content p {
   line-height: 1.4rem;
   text-align: center;
 }
