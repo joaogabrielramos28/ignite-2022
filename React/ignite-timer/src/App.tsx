@@ -1,5 +1,15 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
+import { Button } from "./components/Button";
+import { defaultTheme } from "./styles/themes/default";
 
 export function App() {
-  return <div></div>;
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Button variant="danger" />
+      <Button variant="primary" />
+      <Button variant="secondary" />
+      <Button variant="success" />
+    </ThemeProvider>
+  );
 }
