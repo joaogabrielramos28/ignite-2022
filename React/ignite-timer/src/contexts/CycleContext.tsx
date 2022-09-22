@@ -1,8 +1,8 @@
-import React, { createContext, useReducer, useState } from 'react'
+import { differenceInSeconds } from 'date-fns'
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 import {
-  ActionTypes,
   addNewCycleAction,
-  interrupCurrentCycleAction,
+  interruptCurrentCycleAction,
   markCurrentCycleAsFinishedAction,
 } from '../reducers/cycles/actions'
 import { Cycle, cyclesReducer } from '../reducers/cycles/reducer'
@@ -30,14 +30,33 @@ export const CyclesContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [cyclesState, dispatch] = useReducer(cyclesReducer, {
-    cycles: [],
-    activeCycleId: null,
-  })
+  const [cyclesState, dispatch] = useReducer(
+    cyclesReducer,
+    {
+      cycles: [],
+      activeCycleId: null,
+    },
+    () => {
+      const storagedStateAsJSON = localStorage.getItem(
+        '@ignite-timer:cycles-state-1.0.0',
+      )
+
+      if (storagedStateAsJSON) {
+        return JSON.parse(storagedStateAsJSON)
+      }
+    },
+  )
 
   const { cycles, activeCycleId } = cyclesState
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
+    if (activeCycle) {
+      return differenceInSeconds(new Date(), new Date(activeCycle.startDate))
+    }
+
+    return 0
+  })
 
   function setSecondsPassed(seconds: number) {
     setAmountSecondsPassed(seconds)
@@ -48,7 +67,7 @@ export const CyclesContextProvider = ({
   }
 
   function interruptCurrentCycle() {
-    dispatch(interrupCurrentCycleAction())
+    dispatch(interruptCurrentCycleAction())
   }
 
   function createNewCycle(data: CreateCycleData) {
@@ -61,6 +80,12 @@ export const CyclesContextProvider = ({
     dispatch(addNewCycleAction(newCycle))
     setAmountSecondsPassed(0)
   }
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(cyclesState)
+
+    localStorage.setItem('@ignite-timer:cycles-state-1.0.0', stateJSON)
+  }, [cyclesState])
   return (
     <CyclesContext.Provider
       value={{
