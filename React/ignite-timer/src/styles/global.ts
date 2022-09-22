@@ -13,7 +13,8 @@ export const GlobalStyle = createGlobalStyle`
         }
         body{
             background:${({ theme }) => theme['gray-900']};
-            color:${({ theme }) => theme['gray-300']}
+            color:${({ theme }) => theme['gray-300']};
+            -webkit-font-smoothing:antialiased;
         }
         
         border-style,input-security,textarea,button{
