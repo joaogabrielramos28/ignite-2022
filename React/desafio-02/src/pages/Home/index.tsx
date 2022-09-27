@@ -1,3 +1,5 @@
+import { Header } from "../../components/Header";
+
 export const Home: React.FC = () => {
-  return <></>;
+  return <Header></Header>;
 };

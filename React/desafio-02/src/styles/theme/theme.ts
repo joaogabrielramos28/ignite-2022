@@ -22,7 +22,7 @@ export const defaultTheme = {
   text: {
     sm: "0.625rem",
     md: "0.75rem",
-    lg: "0875rem",
+    lg: "0.875rem",
     xl: "1rem",
     "2xl": "1.125rem",
     "3xl": "1.25rem",
