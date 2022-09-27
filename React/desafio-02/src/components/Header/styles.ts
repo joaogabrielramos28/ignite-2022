@@ -1,16 +1,9 @@
 import styled from "styled-components";
 
-export const HeaderWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const HeaderContainer = styled.header`
-  width: 90rem;
+  max-width: 90rem;
 
-  padding: 2rem 1rem;
+  padding: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,6 +15,6 @@ export const HeaderContainer = styled.header`
 `;
 
 export const BadgeText = styled.span`
-  font-size: ${({ theme }) => theme.text.lg};
-  color: ${({ theme }) => theme["purple-dark"]};
+  font-size: ${({ theme }) => theme.font.text.lg};
+  color: ${({ theme }) => theme.color["purple-dark"]};
 `;
