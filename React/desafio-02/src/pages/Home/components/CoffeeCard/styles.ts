@@ -132,6 +132,11 @@ export const CounterButton = styled.button`
   justify-content: center;
 
   color: ${({ theme }) => theme.color.purple};
+
+  transition: color 0.4s;
+  &:hover {
+    color: ${({ theme }) => theme.color["purple-dark"]};
+  }
 `;
 
 export const Quantity = styled.span``;
@@ -154,4 +159,8 @@ export const AddToCart = styled.button`
   ${({ theme }) => css`
     background-color: ${theme.color["purple-dark"]};
   `}
+  transition:background-color .4s;
+  &:hover {
+    background-color: ${({ theme }) => theme.color["purple"]};
+  }
 `;
