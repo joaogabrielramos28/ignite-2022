@@ -1,4 +1,5 @@
 import { useTheme } from "styled-components";
+import { OrderDetails } from "./components/OrderDetails";
 import { Payment } from "./components/Payment";
 import { RegisterAddress } from "./components/RegisterAddress";
 
@@ -10,6 +11,7 @@ export const Form: React.FC = () => {
       <FormTitle>Complete seu pedido</FormTitle>
       <RegisterAddress />
       <Payment />
+      <OrderDetails />
     </FormContainer>
   );
 };
