@@ -1,3 +1,5 @@
+import { Form } from "./Form";
+
 export const Checkout: React.FC = () => {
-  return <></>;
+  return <Form></Form>;
 };
