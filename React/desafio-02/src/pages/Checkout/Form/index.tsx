@@ -11,7 +11,6 @@ export const Form: React.FC = () => {
       <FormTitle>Complete seu pedido</FormTitle>
       <RegisterAddress />
       <Payment />
-      <OrderDetails />
     </FormContainer>
   );
 };
