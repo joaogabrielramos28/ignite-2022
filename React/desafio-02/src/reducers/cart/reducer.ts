@@ -5,6 +5,7 @@ export interface CoffeeCart {
   name: string;
   price: number;
   count: number;
+  image: string;
 }
 
 export interface CartState {

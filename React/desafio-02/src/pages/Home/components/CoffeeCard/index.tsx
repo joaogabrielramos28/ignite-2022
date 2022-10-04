@@ -53,6 +53,7 @@ export const CoffeeCard: React.FC<CoffeeProps> = ({ coffee }: CoffeeProps) => {
     name,
     count: coffeeQuantity,
     price,
+    image,
   };
 
   return (
