@@ -19,6 +19,8 @@ import CoffeeImg from "../../../../assets/Americano.png";
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { useState } from "react";
+import { useCartContext } from "../../../../contexts/CartContext/CartContext";
+import { CoffeeCart } from "../../../../reducers/cart/reducer";
 
 interface Coffee {
   id: number;
@@ -34,19 +36,31 @@ interface CoffeeProps {
 }
 
 export const CoffeeCard: React.FC<CoffeeProps> = ({ coffee }: CoffeeProps) => {
-  const { name, description, image, price, tags } = coffee;
+  const { addCoffeeToCart } = useCartContext();
+  const { name, description, image, price, tags, id } = coffee;
   const { color } = useTheme();
   const [coffeeQuantity, setCoffeeQuantity] = useState(1);
 
   const handleIncrement = () => setCoffeeQuantity((prevState) => prevState + 1);
   const handleDecrement = () => setCoffeeQuantity((prevState) => prevState - 1);
 
+  const handleAddToCart = (coffee: CoffeeCart) => {
+    addCoffeeToCart(coffee);
+  };
+
+  const cartCoffee: CoffeeCart = {
+    id,
+    name,
+    count: coffeeQuantity,
+    price,
+  };
+
   return (
     <CoffeeCardContainer>
-      <CoffeeImage src={`/coffee/${coffee.image}`} />
+      <CoffeeImage src={`/coffee/${image}`} />
       <CoffeeTypeWrapper>
         {tags.map((tag) => (
-          <CoffeeType>{tag}</CoffeeType>
+          <CoffeeType key={tag}>{tag}</CoffeeType>
         ))}
       </CoffeeTypeWrapper>
       <CoffeeName>{name}</CoffeeName>
@@ -71,7 +85,7 @@ export const CoffeeCard: React.FC<CoffeeProps> = ({ coffee }: CoffeeProps) => {
               <Plus size={14} />
             </CounterButton>
           </Counter>
-          <AddToCart>
+          <AddToCart onClick={() => handleAddToCart(cartCoffee)}>
             <ShoppingCart weight="fill" size={22} color={color.white} />
           </AddToCart>
         </CoffeeCountWrapper>

@@ -8,8 +8,8 @@ export const Router: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
-          <Route path="/" element={<OrderConfirm />} />
-          <Route path="/checkout" element={<OrderConfirm />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/order-confirm" element={<OrderConfirm />} />
         </Route>
       </Routes>

@@ -134,6 +134,7 @@ export const CounterButton = styled.button`
   color: ${({ theme }) => theme.color.purple};
 
   transition: color 0.4s;
+  cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.color["purple-dark"]};
   }
@@ -155,6 +156,8 @@ export const AddToCart = styled.button`
 
   width: 2.37rem;
   height: 2.37rem;
+
+  cursor: pointer;
 
   ${({ theme }) => css`
     background-color: ${theme.color["purple-dark"]};
