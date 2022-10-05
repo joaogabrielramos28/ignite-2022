@@ -4,8 +4,14 @@ import { ShoppingCart, MapPin } from "phosphor-react";
 import { Badge } from "../Badge";
 import { useTheme } from "styled-components";
 import { NavLink } from "react-router-dom";
+import { useCartContext } from "../../contexts/CartContext/CartContext";
 
 export const Header: React.FC = () => {
+  const { cart } = useCartContext();
+
+  const cartQuantity = cart.cart.length;
+  console.log(cartQuantity);
+
   const theme = useTheme();
   return (
     <HeaderContainer>
@@ -18,7 +24,11 @@ export const Header: React.FC = () => {
           <MapPin size={22} color={theme.color.purple} />
           <BadgeText>Porto Alegre, RS</BadgeText>
         </Badge>
-        <Badge background={theme.color["yellow-light"]}>
+        <Badge
+          hasQuantity={true}
+          quantity={String(cartQuantity)}
+          background={theme.color["yellow-light"]}
+        >
           <NavLink to={"/checkout"}>
             <ShoppingCart size={22} color={theme.color["yellow-dark"]} />
           </NavLink>

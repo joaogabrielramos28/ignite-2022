@@ -2,7 +2,7 @@ import { CoffeeCart } from "./reducer";
 
 export enum ActionTypes {
   ADD_NEW_COFFEE = "ADD_NEW_COFFEE",
-  INCREMENT_NEW_COFFEE = "INCREMENT_NEW_COFFEE",
+  CHANGE_COFFEE_QUANTITY = "CHANGE_COFFEE_QUANTITY",
   REMOVE_COFFEE = "REMOVE_COFFEE",
 }
 
