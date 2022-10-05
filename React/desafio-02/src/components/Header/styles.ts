@@ -8,6 +8,13 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
 
+  position: sticky;
+  top: 0;
+
+  height: 6.5rem;
+  width: 100%;
+
+  background-color: ${({ theme }) => theme.color.background};
   nav {
     display: flex;
     gap: 0.75rem;
