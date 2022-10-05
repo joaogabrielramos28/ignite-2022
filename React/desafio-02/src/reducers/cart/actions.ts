@@ -14,3 +14,12 @@ export function addNewCoffee(newCoffee: CoffeeCart) {
     },
   };
 }
+
+export function removeCoffee(coffee: CoffeeCart) {
+  return {
+    type: ActionTypes.REMOVE_COFFEE,
+    payload: {
+      coffee,
+    },
+  };
+}

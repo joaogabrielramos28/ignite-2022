@@ -1,5 +1,7 @@
 import { Minus, Plus, Trash } from "phosphor-react";
 import { useTheme } from "styled-components";
+import { useCartContext } from "../../../../../../contexts/CartContext/CartContext";
+import { CoffeeCart } from "../../../../../../reducers/cart/reducer";
 import {
   Counter,
   CounterButton,
@@ -13,31 +15,50 @@ import {
   RemoveButton,
 } from "./styles";
 
-export const OrderItem: React.FC = () => {
+interface OrderItemProps {
+  coffee: CoffeeCart;
+}
+
+export const OrderItem: React.FC<OrderItemProps> = ({
+  coffee,
+}: OrderItemProps) => {
+  const { removeCoffeeFromCart } = useCartContext();
+
   const { color } = useTheme();
+  const { count, name, image, price, id } = coffee;
+
+  const handleRemoveFromCart = () => {
+    removeCoffeeFromCart(coffee);
+  };
   return (
     <OrderItemContainer>
-      <OrderItemPhoto src={"/coffee/Americano.png"} />
+      <OrderItemPhoto src={`/coffee/${image}`} />
       <OrderItemContent>
-        <OrderItemName>Expresso Americano</OrderItemName>
+        <OrderItemName>{name}</OrderItemName>
         <OrderItemActions>
           <Counter>
             <CounterButton onClick={() => {}}>
               <Minus size={14} />
             </CounterButton>
 
-            <Quantity>1</Quantity>
+            <Quantity>{count}</Quantity>
             <CounterButton onClick={() => {}}>
               <Plus size={14} />
             </CounterButton>
           </Counter>
 
-          <RemoveButton>
+          <RemoveButton onClick={handleRemoveFromCart}>
             <Trash size={16} color={color.purple} /> Remover
           </RemoveButton>
         </OrderItemActions>
       </OrderItemContent>
-      <OrderItemPrice>R$ 9,90</OrderItemPrice>
+      <OrderItemPrice>
+        {price.toLocaleString("pt-BR", {
+          minimumFractionDigits: 2,
+          style: "currency",
+          currency: "BRL",
+        })}
+      </OrderItemPrice>
     </OrderItemContainer>
   );
 };

@@ -72,6 +72,7 @@ export const RemoveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   width: 5.68rem;
 

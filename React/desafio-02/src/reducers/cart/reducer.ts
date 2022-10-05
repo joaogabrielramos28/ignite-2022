@@ -36,6 +36,17 @@ export function cartReducer(state: CartState, action: any) {
             action.payload.newCoffee.price * action.payload.newCoffee.count;
         });
       }
+    case ActionTypes.REMOVE_COFFEE:
+      return produce(state, (draft) => {
+        const coffee = action.payload.coffee;
+
+        const coffeeIndex = state.cart.findIndex(
+          (coffee) => coffee.id === coffee.id
+        );
+
+        draft.cart.splice(coffeeIndex, 1);
+        draft.total -= coffee.count * coffee.price;
+      });
 
     default:
       return state;

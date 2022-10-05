@@ -1,3 +1,4 @@
+import { useCartContext } from "../../../../contexts/CartContext/CartContext";
 import { OrderItem } from "./components/OrderItem";
 import {
   ConfirmButton,
@@ -10,17 +11,26 @@ import {
 } from "./styles";
 
 export const OrderDetails: React.FC = () => {
+  const { cart } = useCartContext();
   return (
     <OrderDetailsContainer>
       <Title>Cafés selecionados</Title>
 
       <OrderDetailsWrapper>
-        <OrderItem />
-        <OrderItem />
+        {cart.cart.map((item) => (
+          <OrderItem coffee={item} />
+        ))}
+
         <OrderTotalWrapper>
           <OrderTotalDetails>
             <span>Total de itens</span>
-            <span>R$ 29,70</span>
+            <span>
+              {cart.total.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                style: "currency",
+                currency: "BRL",
+              })}
+            </span>
           </OrderTotalDetails>
           <OrderTotalDetails>
             <span>Entrega</span>
@@ -28,7 +38,13 @@ export const OrderDetails: React.FC = () => {
           </OrderTotalDetails>
           <OrderTotalDetailsTotal>
             <span>Total</span>
-            <span>R$ 33,20</span>
+            <span>
+              {(cart.total + 3.5).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                style: "currency",
+                currency: "BRL",
+              })}
+            </span>
           </OrderTotalDetailsTotal>
         </OrderTotalWrapper>
 
