@@ -16,6 +16,7 @@ export const PaymentTypeButtonContainer = styled.button<PaymentTypeButtonProps>`
   align-items: center;
   justify-content: flex-start;
   text-transform: uppercase;
+  cursor: pointer;
   ${({ theme, selected }) => css`
     background-color: ${selected
       ? theme.color["purple-light"]

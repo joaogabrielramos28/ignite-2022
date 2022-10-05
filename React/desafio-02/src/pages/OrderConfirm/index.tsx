@@ -10,9 +10,26 @@ import {
 } from "./styles";
 
 import ConfirmImage from "../../assets/Illustration.png";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { CheckoutFormData } from "../Checkout";
+
+interface LocationType {
+  state: CheckoutFormData;
+}
 
 export const OrderConfirm: React.FC = () => {
   const { color } = useTheme();
+  const navigate = useNavigate();
+  const { state } = useLocation() as unknown as LocationType;
+
+  useEffect(() => {
+    if (!state) {
+      navigate("/");
+    }
+  }, []);
+
+  if (!state) return <></>;
   return (
     <OrderConfirmContainer>
       <div>
@@ -26,8 +43,8 @@ export const OrderConfirm: React.FC = () => {
         <OrderConfirmInfo>
           <InfoOrder
             icon={<MapPin size={16} weight="fill" color={color.white} />}
-            title={"Entrega em Rua João Daniel Martinelli, 102"}
-            subtitle={"Farrapos - Porto Alegre, RS"}
+            title={`Entrega em ${state.street}, ${state.number}`}
+            subtitle={`${state.district} - ${state.city}, ${state.state}`}
             background={color.purple}
           />
           <InfoOrder
@@ -41,7 +58,7 @@ export const OrderConfirm: React.FC = () => {
               <CurrencyDollar size={16} weight="fill" color={color.white} />
             }
             title={"Pagamento na entrega"}
-            subtitle={"Cartão de Crédito"}
+            subtitle={state.paymentType}
             background={color["yellow-dark"]}
           />
         </OrderConfirmInfo>

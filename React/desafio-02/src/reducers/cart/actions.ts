@@ -1,9 +1,11 @@
+import { Action } from "@remix-run/router";
 import { CoffeeCart } from "./reducer";
 
 export enum ActionTypes {
   ADD_NEW_COFFEE = "ADD_NEW_COFFEE",
   CHANGE_COFFEE_QUANTITY = "CHANGE_COFFEE_QUANTITY",
   REMOVE_COFFEE = "REMOVE_COFFEE",
+  RESET_CART = "RESET_CART",
 }
 
 export function addNewCoffee(newCoffee: CoffeeCart) {
@@ -34,5 +36,11 @@ export function changeQuantityCoffee(
       coffee,
       type,
     },
+  };
+}
+
+export function removeAllCoffee() {
+  return {
+    type: ActionTypes.RESET_CART,
   };
 }

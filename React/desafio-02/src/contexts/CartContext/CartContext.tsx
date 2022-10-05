@@ -1,7 +1,9 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
+import { CheckoutFormData } from "../../pages/Checkout";
 import {
   addNewCoffee,
   changeQuantityCoffee,
+  removeAllCoffee,
   removeCoffee,
 } from "../../reducers/cart/actions";
 import {
@@ -18,6 +20,7 @@ interface CartContextProps {
     coffee: CoffeeCart,
     type: "increment" | "decrement"
   ) => void;
+  resetCart: () => void;
 }
 
 const CartContext = createContext({} as CartContextProps);
@@ -43,6 +46,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch(changeQuantityCoffee(coffee, type));
   };
 
+  const resetCart = () => {
+    dispatch(removeAllCoffee());
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -50,6 +57,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         addCoffeeToCart,
         removeCoffeeFromCart,
         changeCoffeeQuantity,
+        resetCart,
       }}
     >
       {children}

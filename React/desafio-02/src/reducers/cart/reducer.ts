@@ -63,6 +63,12 @@ export function cartReducer(state: CartState, action: any) {
             : draft.cart[coffeeIndex].count - 1;
       });
 
+    case ActionTypes.RESET_CART:
+      return produce(state, (draft) => {
+        draft.cart = [];
+        draft.total = 0;
+      });
+
     default:
       return state;
   }
