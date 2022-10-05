@@ -77,7 +77,10 @@ export const CoffeeCard: React.FC<CoffeeProps> = ({ coffee }: CoffeeProps) => {
 
         <CoffeeCountWrapper>
           <Counter>
-            <CounterButton onClick={handleDecrement}>
+            <CounterButton
+              onClick={handleDecrement}
+              disabled={coffeeQuantity === 1}
+            >
               <Minus size={14} />
             </CounterButton>
 

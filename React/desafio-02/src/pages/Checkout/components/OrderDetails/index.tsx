@@ -12,6 +12,7 @@ import {
 
 export const OrderDetails: React.FC = () => {
   const { cart } = useCartContext();
+
   return (
     <OrderDetailsContainer>
       <Title>Cafés selecionados</Title>

@@ -48,6 +48,21 @@ export function cartReducer(state: CartState, action: any) {
         draft.total -= coffee.count * coffee.price;
       });
 
+    case ActionTypes.CHANGE_COFFEE_QUANTITY:
+      return produce(state, (draft) => {
+        const type = action.payload.type;
+        const coffee = action.payload.coffee;
+
+        const coffeeIndex = state.cart.findIndex(
+          (coffee) => coffee.id === coffee.id
+        );
+
+        draft.cart[coffeeIndex].count =
+          type === "increment"
+            ? draft.cart[coffeeIndex].count + 1
+            : draft.cart[coffeeIndex].count - 1;
+      });
+
     default:
       return state;
   }

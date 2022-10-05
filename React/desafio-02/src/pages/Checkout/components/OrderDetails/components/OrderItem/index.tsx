@@ -22,13 +22,17 @@ interface OrderItemProps {
 export const OrderItem: React.FC<OrderItemProps> = ({
   coffee,
 }: OrderItemProps) => {
-  const { removeCoffeeFromCart } = useCartContext();
+  const { removeCoffeeFromCart, changeCoffeeQuantity } = useCartContext();
 
   const { color } = useTheme();
-  const { count, name, image, price, id } = coffee;
+  const { count, name, image, price } = coffee;
 
   const handleRemoveFromCart = () => {
     removeCoffeeFromCart(coffee);
+  };
+
+  const handleChangeCoffeeQuantity = (type: "increment" | "decrement") => {
+    changeCoffeeQuantity(coffee, type);
   };
   return (
     <OrderItemContainer>
@@ -37,12 +41,17 @@ export const OrderItem: React.FC<OrderItemProps> = ({
         <OrderItemName>{name}</OrderItemName>
         <OrderItemActions>
           <Counter>
-            <CounterButton onClick={() => {}}>
+            <CounterButton
+              onClick={() => handleChangeCoffeeQuantity("decrement")}
+              disabled={count === 1}
+            >
               <Minus size={14} />
             </CounterButton>
 
             <Quantity>{count}</Quantity>
-            <CounterButton onClick={() => {}}>
+            <CounterButton
+              onClick={() => handleChangeCoffeeQuantity("increment")}
+            >
               <Plus size={14} />
             </CounterButton>
           </Counter>

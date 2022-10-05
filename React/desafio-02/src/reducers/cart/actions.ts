@@ -23,3 +23,16 @@ export function removeCoffee(coffee: CoffeeCart) {
     },
   };
 }
+
+export function changeQuantityCoffee(
+  coffee: CoffeeCart,
+  type: "increment" | "decrement"
+) {
+  return {
+    type: ActionTypes.CHANGE_COFFEE_QUANTITY,
+    payload: {
+      coffee,
+      type,
+    },
+  };
+}
