@@ -5,6 +5,7 @@ import { Highlight } from "@components/Highlight";
 import { FlatList } from "react-native";
 import { Container } from "./styles";
 import { ListEmpty } from "@components/ListEmpty";
+import { Button } from "@components/Button";
 
 export const Groups = () => {
   const [groups, setGroups] = useState<string[]>([]);
@@ -22,6 +23,7 @@ export const Groups = () => {
           <ListEmpty message="Que tal cadastrar a primeira turma?" />
         }
       />
+      <Button title="Cadastrar turma" />
     </Container>
   );
 };
