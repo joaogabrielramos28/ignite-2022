@@ -6,9 +6,15 @@ import { FlatList } from "react-native";
 import { Container } from "./styles";
 import { ListEmpty } from "@components/ListEmpty";
 import { Button } from "@components/Button";
+import { useNavigation } from "@react-navigation/native";
 
 export const Groups = () => {
   const [groups, setGroups] = useState<string[]>([]);
+  const { navigate } = useNavigation();
+
+  const handleNewGroup = () => {
+    navigate("new");
+  };
   return (
     <Container>
       <Header />
@@ -23,7 +29,7 @@ export const Groups = () => {
           <ListEmpty message="Que tal cadastrar a primeira turma?" />
         }
       />
-      <Button title="Cadastrar turma" />
+      <Button title="Cadastrar turma" onPress={handleNewGroup} />
     </Container>
   );
 };

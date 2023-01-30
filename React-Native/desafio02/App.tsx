@@ -1,4 +1,4 @@
-import { Groups } from "@screens/Groups";
+import { Routes } from "./src/routes";
 import theme from "@theme/index";
 import { ThemeProvider } from "styled-components";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
@@ -19,7 +19,7 @@ export default function App() {
         translucent
         backgroundColor={"transparent"}
       />
-      {fontsLoaded ? <Groups /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }
