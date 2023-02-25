@@ -1,6 +1,11 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import React from "react";
 import { StackRoutesEnum } from "../../../routes/stack";
+import { FeedBackParamType } from "../../@types/navigation";
 import { FeedbackLayout } from "./layout";
 
 export function Feedback() {
@@ -9,7 +14,14 @@ export function Feedback() {
     dispatch(StackActions.popToTop());
   };
 
+  const { params } = useRoute();
+
+  const { isHealthy } = params as FeedBackParamType;
+
   return (
-    <FeedbackLayout goToStart={goToStart} isHealthy={false}></FeedbackLayout>
+    <FeedbackLayout
+      goToStart={goToStart}
+      isHealthy={isHealthy}
+    ></FeedbackLayout>
   );
 }

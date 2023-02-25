@@ -4,11 +4,18 @@ import { Option, Status, Title } from "./styles";
 type TypeMealProps = {
   status?: "success" | "error";
   title: string;
+  isSelected?: boolean;
+  onPress: () => void;
 };
 
-export function TypeMeal({ title, status }: TypeMealProps) {
+export function TypeMeal({
+  title,
+  status,
+  isSelected,
+  onPress,
+}: TypeMealProps) {
   return (
-    <Option selected={false} status={status}>
+    <Option selected={isSelected} status={status} onPress={onPress}>
       <Status status={status} />
       <Title>{title}</Title>
     </Option>

@@ -1,30 +1,26 @@
 import { Plus } from "phosphor-react-native";
 import React from "react";
-import { SectionList, View } from "react-native";
+import { SectionList } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Button } from "../../components/Button";
 import { Feedback } from "../../components/Feedback";
 import { Header } from "../../components/Header";
 import { Meal } from "../../components/Meal";
 import { HeaderSection } from "../../components/Meal/styles";
-import meals from "../../constants/meals";
+import { MealMapper } from "../../storage/DTOs/meal";
 
-import {
-  Container,
-  ContentWrapper,
-  NewMeal,
-  NewMealText,
-  Title,
-} from "./styles";
+import { Container, ContentWrapper, Title } from "./styles";
 
 type StartLayoutProps = {
   onGoToStatics: () => void;
   onGoToNewMeal: () => void;
+  meals: MealMapper[];
 };
 
 export const StartLayout = ({
   onGoToStatics,
   onGoToNewMeal,
+  meals,
 }: StartLayoutProps) => {
   const { colors } = useTheme();
   return (
@@ -51,12 +47,8 @@ export const StartLayout = ({
           <HeaderSection>{title}</HeaderSection>
         )}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item, section: { title } }) => (
-          <Meal
-            title={item.title}
-            hour={item.hour}
-            isHealthy={item.isHealthy}
-          />
+        renderItem={({ item }) => (
+          <Meal title={item.name} hour={item.time} isHealthy={item.isHealthy} />
         )}
       />
     </Container>

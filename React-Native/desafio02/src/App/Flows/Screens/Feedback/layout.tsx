@@ -21,11 +21,11 @@ export function FeedbackLayout({ isHealthy, goToStart }: FeedbackLayoutProps) {
   const title = isHealthy ? "Continue assim!" : "Que pena!";
   const subTitle = isHealthy ? (
     <SubTitle>
-      Você continua <Strong>dentro da dieta.</Strong> Muito bem!
+      Você continua <Strong>dentro da dieta.</Strong>Muito bem!
     </SubTitle>
   ) : (
     <SubTitle>
-      Você <Strong>saiu da dieta </Strong> dessa vez, mas continue se esforçando
+      Você <Strong>saiu da dieta </Strong>dessa vez, mas continue se esforçando
       e não desista!
     </SubTitle>
   );
