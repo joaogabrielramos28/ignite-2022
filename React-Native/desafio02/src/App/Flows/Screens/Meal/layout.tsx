@@ -1,38 +1,54 @@
-import { ArrowLeft } from "phosphor-react-native";
+import {
+  ArrowLeft,
+  Pencil,
+  PencilSimpleLine,
+  Trash,
+} from "phosphor-react-native";
 import React from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Button } from "../../components/Button";
 import { TypeMeal } from "../../components/TypeMeal";
+import { Meal } from "../../storage/DTOs/meal";
 import {
+  Badge,
+  BadgeStatus,
+  BadgeText,
   Container,
   Content,
   Form,
   FormField,
   FormFieldGroup,
   Header,
-  Input,
-  Label,
-  TextArea,
+  SubTitle,
+  Text,
+  TextSecondary,
   Title,
 } from "./styles";
 
 type MealLayoutProps = {
   onGoBack: () => void;
   onGoToFeedback: () => void;
+  item: Meal;
 };
 
-export function MealLayout({ onGoBack, onGoToFeedback }: MealLayoutProps) {
+export function MealLayout({
+  onGoBack,
+  onGoToFeedback,
+  item,
+}: MealLayoutProps) {
   const { colors } = useTheme();
 
+  const badgeText = item.isHealthy ? "dentro da dieta" : "fora da dieta";
+
   return (
-    <Container>
+    <Container isHealthy={item.isHealthy}>
       <Header>
         <TouchableOpacity onPress={onGoBack}>
           <ArrowLeft size={24} weight="bold" color={colors["gray-2"]} />
         </TouchableOpacity>
 
-        <Title>Nova refeição</Title>
+        <Title>Refeição</Title>
       </Header>
 
       <Content
@@ -42,30 +58,42 @@ export function MealLayout({ onGoBack, onGoToFeedback }: MealLayoutProps) {
         }}
       >
         <Form>
-          <FormField>
-            <Label>Nome</Label>
-            <Input />
-          </FormField>
-          <FormField>
-            <Label>Descrição</Label>
-            <TextArea multiline={true} textAlignVertical={"top"} />
-          </FormField>
-          <FormFieldGroup>
-            <FormField>
-              <Label>Data</Label>
-              <Input />
-            </FormField>
-            <FormField hasMarginLeft>
-              <Label>Hora</Label>
-              <Input />
-            </FormField>
-          </FormFieldGroup>
-          <FormField>
-            <Label>Está dentro da dieta?</Label>
-          </FormField>
-        </Form>
+          <View>
+            <Text>{item.name}</Text>
+            <SubTitle>{item.description}</SubTitle>
 
-        <Button onPress={onGoToFeedback} title="Cadastrar refeição" />
+            <FormField>
+              <TextSecondary>Data e hora</TextSecondary>
+              <SubTitle>
+                {item.date} às {item.time}
+              </SubTitle>
+            </FormField>
+
+            <Badge>
+              <BadgeStatus isHealthy={item.isHealthy} />
+              <BadgeText>{badgeText}</BadgeText>
+            </Badge>
+          </View>
+          <View>
+            <Button
+              onPress={() => {}}
+              title="Editar refeição"
+              icon={
+                <PencilSimpleLine
+                  size={22}
+                  color={colors.white}
+                  weight={"bold"}
+                />
+              }
+            />
+            <Button
+              secondary
+              onPress={() => {}}
+              title="Excluir refeição"
+              icon={<Trash size={22} color={colors["gray-1"]} />}
+            />
+          </View>
+        </Form>
       </Content>
     </Container>
   );

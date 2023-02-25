@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import { StackRoutesEnum } from "../../../routes/stack";
-import { MealMapper } from "../../storage/DTOs/meal";
+import { Meal, MealMapper } from "../../storage/DTOs/meal";
 import { getMeals } from "../../storage/Meals/getMeals";
 import { StartLayout } from "./Layout";
 
@@ -34,6 +34,12 @@ export const Start = () => {
     setMeals(sortedMeals);
   };
 
+  const goToMeal = async (meal: Meal) => {
+    navigate(StackRoutesEnum.MEAL, {
+      meal,
+    });
+  };
+
   useFocusEffect(
     useCallback(() => {
       getMealsFromAsync();
@@ -41,6 +47,7 @@ export const Start = () => {
   );
   return (
     <StartLayout
+      goToMeal={goToMeal}
       meals={meals}
       onGoToStatics={goToStatistics}
       onGoToNewMeal={goToNewMeal}

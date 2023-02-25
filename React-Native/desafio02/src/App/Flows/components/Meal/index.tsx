@@ -5,11 +5,12 @@ type MealProps = {
   isHealthy: boolean;
   hour: string;
   title: string;
+  onPress: () => void;
 };
 
-export function Meal({ title, hour, isHealthy }: MealProps) {
+export function Meal({ title, hour, isHealthy, onPress }: MealProps) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <InfoContainer>
         <Hour>{hour}</Hour>
         <Divider />

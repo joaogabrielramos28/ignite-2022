@@ -1,5 +1,11 @@
+import { Meal } from "../storage/DTOs/meal";
+
 export type FeedBackParamType = {
   isHealthy: boolean;
+};
+
+export type MealParamType = {
+  meal: Meal;
 };
 
 export declare global {
@@ -9,7 +15,7 @@ export declare global {
       Statistics: undefined;
       NewMeal: undefined;
       Feedback: FeedBackParamType;
-      Meal: undefined;
+      Meal: MealParamType;
     }
   }
 }

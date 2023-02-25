@@ -7,7 +7,7 @@ import { Feedback } from "../../components/Feedback";
 import { Header } from "../../components/Header";
 import { Meal } from "../../components/Meal";
 import { HeaderSection } from "../../components/Meal/styles";
-import { MealMapper } from "../../storage/DTOs/meal";
+import { Meal as MealType, MealMapper } from "../../storage/DTOs/meal";
 
 import { Container, ContentWrapper, Title } from "./styles";
 
@@ -15,12 +15,14 @@ type StartLayoutProps = {
   onGoToStatics: () => void;
   onGoToNewMeal: () => void;
   meals: MealMapper[];
+  goToMeal: (meal: MealType) => Promise<void>;
 };
 
 export const StartLayout = ({
   onGoToStatics,
   onGoToNewMeal,
   meals,
+  goToMeal,
 }: StartLayoutProps) => {
   const { colors } = useTheme();
   return (
@@ -48,7 +50,12 @@ export const StartLayout = ({
         )}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <Meal title={item.name} hour={item.time} isHealthy={item.isHealthy} />
+          <Meal
+            onPress={() => goToMeal(item)}
+            title={item.name}
+            hour={item.time}
+            isHealthy={item.isHealthy}
+          />
         )}
       />
     </Container>

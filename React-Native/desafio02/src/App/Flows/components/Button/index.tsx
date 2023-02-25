@@ -5,13 +5,19 @@ type ButtonProps = {
   onPress: () => void;
   icon?: React.ReactNode;
   title: string;
+  secondary?: boolean;
 };
 
-export function Button({ onPress, title, icon }: ButtonProps) {
+export function Button({
+  onPress,
+  title,
+  icon,
+  secondary = false,
+}: ButtonProps) {
   return (
-    <Container onPress={onPress}>
+    <Container onPress={onPress} secondary={secondary}>
       {icon}
-      <Text>{title}</Text>
+      <Text secondary={secondary}>{title}</Text>
     </Container>
   );
 }

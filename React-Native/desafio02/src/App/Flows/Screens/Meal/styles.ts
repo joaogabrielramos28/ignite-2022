@@ -4,22 +4,30 @@ type FormFieldProps = {
   hasMarginLeft?: boolean;
 };
 
-export const Container = styled.View`
+type ContainerProps = {
+  isHealthy: boolean;
+};
+
+export const Container = styled.View<ContainerProps>`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors["gray-5"]};
+
+  background-color: ${({ theme, isHealthy }) =>
+    isHealthy ? theme.colors["green-light"] : theme.colors["red-light"]};
 `;
 
 export const Header = styled.View`
   width: 100%;
   padding: 40px 24px;
 
-  background-color: ${({ theme }) => theme.colors["gray-5"]};
-
   flex-direction: row;
   justify-content: space-between;
 `;
 
-export const Form = styled.View``;
+export const Form = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export const Title = styled.Text`
   flex: 1;
@@ -35,6 +43,8 @@ export const Content = styled.ScrollView`
   flex: 1;
   border-radius: 20px;
 
+  flex-direction: column;
+
   padding: 32px 24px;
 
   background-color: ${({ theme }) => theme.colors["white"]};
@@ -43,7 +53,7 @@ export const Content = styled.ScrollView`
 export const FormField = styled.View<FormFieldProps>`
   width: 100%;
   flex-shrink: 1;
-  margin-bottom: 24px;
+  margin-top: 32px;
 
   ${({ hasMarginLeft }) =>
     hasMarginLeft &&
@@ -64,19 +74,58 @@ export const Label = styled.Text`
   `}
 `;
 
-export const Input = styled.TextInput`
-  width: 100%;
-  border-radius: 6px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors["gray-5"]};
-  color: ${({ theme }) => theme.colors["gray-1"]};
-
-  padding: 14px;
-  margin-top: 4px;
+export const Text = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.colors["gray-1"]};
+    font-family: ${theme.fonts["bold"]};
+    font-size: ${theme.fontSize["xl"]};
+  `}
 `;
 
-export const TextArea = styled(Input)`
-  height: 120px;
+export const TextSecondary = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.colors["gray-1"]};
+    font-family: ${theme.fonts["bold"]};
+    font-size: ${theme.fontSize["md"]};
+  `}
 `;
 
+export const SubTitle = styled.Text`
+  margin-top: 8px;
+  ${({ theme }) => css`
+    color: ${theme.colors["gray-2"]};
+    font-family: ${theme.fonts["regular"]};
+    font-size: ${theme.fontSize["lg"]};
+  `}
+`;
+
+export const Badge = styled.View`
+  margin-top: 24px;
+  padding: 8px 16px;
+  width: 144px;
+  border-radius: 1000px;
+  background-color: ${({ theme }) => theme.colors["gray-7"]};
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BadgeText = styled.Text`
+  margin-left: 8px;
+  ${({ theme }) => css`
+    color: ${theme.colors["gray-1"]};
+    font-family: ${theme.fonts["regular"]};
+    font-size: ${theme.fontSize["md"]};
+  `}
+`;
+
+export const BadgeStatus = styled.View<ContainerProps>`
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+
+  background-color: ${({ theme, isHealthy }) =>
+    isHealthy ? theme.colors["green-dark"] : theme.colors["red-dark"]};
+`;
 export const CreateMeal = styled.Button;
