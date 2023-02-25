@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import { Feedback } from "../Flows/Screens/Feedback";
 import { NewMeal } from "../Flows/Screens/NewMeal";
 import { Start } from "../Flows/Screens/Start";
 import { Statistics } from "../Flows/Screens/Statistics";
@@ -10,6 +11,7 @@ export enum StackRoutesEnum {
   START = "Start",
   STATISTICS = "Statistics",
   NEW_MEAL = "NewMeal",
+  FEEDBACK = "Feedback",
 }
 
 export const StackRoutes = () => {
@@ -22,6 +24,7 @@ export const StackRoutes = () => {
       <Screen name={StackRoutesEnum.START} component={Start} />
       <Screen name={StackRoutesEnum.STATISTICS} component={Statistics} />
       <Screen name={StackRoutesEnum.NEW_MEAL} component={NewMeal} />
+      <Screen name={StackRoutesEnum.FEEDBACK} component={Feedback} />
     </Navigator>
   );
 };

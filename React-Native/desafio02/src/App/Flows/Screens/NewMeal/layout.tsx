@@ -19,9 +19,13 @@ import {
 
 type NewMealLayoutProps = {
   onGoBack: () => void;
+  onGoToFeedback: () => void;
 };
 
-export function NewMealLayout({ onGoBack }: NewMealLayoutProps) {
+export function NewMealLayout({
+  onGoBack,
+  onGoToFeedback,
+}: NewMealLayoutProps) {
   const { colors } = useTheme();
 
   return (
@@ -72,7 +76,7 @@ export function NewMealLayout({ onGoBack }: NewMealLayoutProps) {
           </FormField>
         </Form>
 
-        <Button onPress={() => {}} title="Cadastrar refeição" />
+        <Button onPress={onGoToFeedback} title="Cadastrar refeição" />
       </Content>
     </Container>
   );
