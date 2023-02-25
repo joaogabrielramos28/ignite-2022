@@ -3,10 +3,14 @@ import { useTheme } from "styled-components/native";
 import { Container, Header, Information, Percentage } from "./styles";
 import { ArrowUpRight } from "phosphor-react-native";
 
-export const Feedback = () => {
+type FeedbackProps = {
+  onPress: () => void;
+};
+
+export const Feedback = ({ onPress }: FeedbackProps) => {
   const { colors } = useTheme();
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Header>
         <ArrowUpRight size={24} weight="bold" color={colors["green-dark"]} />
       </Header>

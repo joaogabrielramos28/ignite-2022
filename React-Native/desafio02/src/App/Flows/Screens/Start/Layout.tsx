@@ -16,12 +16,16 @@ import {
   Title,
 } from "./styles";
 
-export const StartLayout = () => {
+type StartLayoutProps = {
+  onGoToStatics: () => void;
+};
+
+export const StartLayout = ({ onGoToStatics }: StartLayoutProps) => {
   const { colors } = useTheme();
   return (
     <Container>
       <Header />
-      <Feedback />
+      <Feedback onPress={onGoToStatics} />
       <ContentWrapper>
         <Title>Refeições</Title>
       </ContentWrapper>

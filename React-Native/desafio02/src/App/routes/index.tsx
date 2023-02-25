@@ -1,6 +1,11 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { Start } from "../Flows/Screens/Start";
+import { StackRoutes } from "./stack";
 
 export const AppRoutes = () => {
-  return <Start />;
+  return (
+    <NavigationContainer>
+      <StackRoutes />
+    </NavigationContainer>
+  );
 };
