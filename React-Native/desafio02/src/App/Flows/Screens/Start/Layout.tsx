@@ -2,6 +2,7 @@ import { Plus } from "phosphor-react-native";
 import React from "react";
 import { SectionList, View } from "react-native";
 import { useTheme } from "styled-components/native";
+import { Button } from "../../components/Button";
 import { Feedback } from "../../components/Feedback";
 import { Header } from "../../components/Header";
 import { Meal } from "../../components/Meal";
@@ -18,9 +19,13 @@ import {
 
 type StartLayoutProps = {
   onGoToStatics: () => void;
+  onGoToNewMeal: () => void;
 };
 
-export const StartLayout = ({ onGoToStatics }: StartLayoutProps) => {
+export const StartLayout = ({
+  onGoToStatics,
+  onGoToNewMeal,
+}: StartLayoutProps) => {
   const { colors } = useTheme();
   return (
     <Container>
@@ -30,10 +35,11 @@ export const StartLayout = ({ onGoToStatics }: StartLayoutProps) => {
         <Title>Refeições</Title>
       </ContentWrapper>
 
-      <NewMeal>
-        <Plus color={colors.white} size={18} weight="bold" />
-        <NewMealText>Nova refeição</NewMealText>
-      </NewMeal>
+      <Button
+        onPress={onGoToNewMeal}
+        title="Nova refeição"
+        icon={<Plus color={colors.white} size={18} weight="bold" />}
+      />
 
       <SectionList
         stickySectionHeadersEnabled={false}

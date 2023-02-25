@@ -9,5 +9,11 @@ export const Start = () => {
   const goToStatistics = () => {
     navigate(StackRoutesEnum.STATISTICS);
   };
-  return <StartLayout onGoToStatics={goToStatistics} />;
+
+  const goToNewMeal = () => {
+    navigate(StackRoutesEnum.NEW_MEAL);
+  };
+  return (
+    <StartLayout onGoToStatics={goToStatistics} onGoToNewMeal={goToNewMeal} />
+  );
 };
