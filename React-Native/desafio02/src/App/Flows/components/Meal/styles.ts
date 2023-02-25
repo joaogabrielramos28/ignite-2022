@@ -63,4 +63,6 @@ export const HeaderSection = styled.Text`
     font-size: ${theme.fontSize.xl};
     color: ${theme.colors["gray-1"]};
   `}
+
+  margin-top:32px;
 `;

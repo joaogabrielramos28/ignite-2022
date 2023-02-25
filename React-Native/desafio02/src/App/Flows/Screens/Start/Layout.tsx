@@ -32,6 +32,7 @@ export const StartLayout = () => {
       </NewMeal>
 
       <SectionList
+        stickySectionHeadersEnabled={false}
         style={{
           marginTop: 32,
         }}
