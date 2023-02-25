@@ -5,14 +5,16 @@ import { ArrowUpRight } from "phosphor-react-native";
 
 type FeedbackProps = {
   onPress: () => void;
+  isHealthy?: boolean;
 };
 
-export const Feedback = ({ onPress }: FeedbackProps) => {
+export const Feedback = ({ onPress, isHealthy }: FeedbackProps) => {
+  const color = isHealthy ? "green-dark" : "red-dark";
   const { colors } = useTheme();
   return (
-    <Container onPress={onPress}>
+    <Container onPress={onPress} isHealthy={isHealthy}>
       <Header>
-        <ArrowUpRight size={24} weight="bold" color={colors["green-dark"]} />
+        <ArrowUpRight size={24} weight="bold" color={colors[color]} />
       </Header>
 
       <Percentage>90,86%</Percentage>

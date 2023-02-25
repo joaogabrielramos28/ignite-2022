@@ -1,8 +1,13 @@
 import styled, { css } from "styled-components/native";
 
-export const Container = styled.TouchableOpacity`
+type ContainerProps = {
+  isHealthy: boolean;
+};
+
+export const Container = styled.TouchableOpacity<ContainerProps>`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors["green-light"]};
+  background-color: ${({ theme, isHealthy }) =>
+    isHealthy ? theme.colors["green-light"] : theme.colors["red-light"]};
   border-radius: 8px;
 
   margin-top: 36px;

@@ -25,7 +25,7 @@ export const StartLayout = ({ onGoToStatics }: StartLayoutProps) => {
   return (
     <Container>
       <Header />
-      <Feedback onPress={onGoToStatics} />
+      <Feedback onPress={onGoToStatics} isHealthy={true} />
       <ContentWrapper>
         <Title>Refeições</Title>
       </ContentWrapper>
