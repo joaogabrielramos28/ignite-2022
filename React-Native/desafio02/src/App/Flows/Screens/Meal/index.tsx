@@ -1,24 +1,36 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import React from "react";
 import { StackRoutesEnum } from "../../../routes/stack";
 import { FeedBackParamType, MealParamType } from "../../@types/navigation";
+import { deleteMeal } from "../../storage/Meals/deleteMeals";
 import { MealLayout } from "./layout";
 
 export function Meal() {
-  const { goBack, navigate } = useNavigation();
-  const goToFeedback = () => {
-    navigate(StackRoutesEnum.FEEDBACK);
-  };
+  const { goBack, dispatch, navigate } = useNavigation();
 
   const { params } = useRoute();
 
   const { meal } = params as MealParamType;
 
+  const goToEditMeal = () => {
+    navigate(StackRoutesEnum.EDIT_MEAL, { meal });
+  };
+
+  const onDeleteMeal = async (id: string, date: string) => {
+    await deleteMeal(id, date);
+    dispatch(StackActions.popToTop());
+  };
+
   return (
     <MealLayout
+      onDeleteMeal={onDeleteMeal}
       item={meal}
       onGoBack={goBack}
-      onGoToFeedback={goToFeedback}
+      onGoToEditMeal={goToEditMeal}
     ></MealLayout>
   );
 }

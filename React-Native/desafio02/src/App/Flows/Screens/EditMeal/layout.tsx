@@ -1,9 +1,9 @@
+import React from "react";
+
 import { ArrowLeft } from "phosphor-react-native";
-import React, { useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Masks } from "react-native-mask-input";
 import { useTheme } from "styled-components/native";
-import { FormValue } from ".";
 import { Button } from "../../components/Button";
 import { InputMask } from "../../components/InputMask";
 import { TypeMeal } from "../../components/TypeMeal";
@@ -19,12 +19,12 @@ import {
   TextArea,
   Title,
 } from "./styles";
+import { FormValue } from ".";
 
 const HOUR_MASK = [/[0-2]/, /[0-9]/, ":", /[0-5]/, /[0-9]/];
 
-type NewMealLayoutProps = {
+type EditMealProps = {
   onGoBack: () => void;
-  onGoToFeedback: () => void;
   onChange: {
     onChangeDate: (masked: string, unmasked: string) => void;
     onChangeTime: (masked: string, unmasked: string) => void;
@@ -33,15 +33,15 @@ type NewMealLayoutProps = {
     onChangeIsHealthy: (value: boolean) => void;
   };
   formValue: FormValue;
-  onCreateMeal: () => Promise<void>;
+  onEditMeal: () => Promise<void>;
 };
 
-export function NewMealLayout({
+export function EditMealLayout({
   onGoBack,
   onChange,
   formValue,
-  onCreateMeal,
-}: NewMealLayoutProps) {
+  onEditMeal,
+}: EditMealProps) {
   const { colors } = useTheme();
 
   return (
@@ -51,7 +51,7 @@ export function NewMealLayout({
           <ArrowLeft size={24} weight="bold" color={colors["gray-2"]} />
         </TouchableOpacity>
 
-        <Title>Nova refeição</Title>
+        <Title>Editar refeição</Title>
       </Header>
 
       <Content
@@ -118,7 +118,7 @@ export function NewMealLayout({
           </FormField>
         </Form>
 
-        <Button onPress={onCreateMeal} title="Cadastrar refeição" />
+        <Button onPress={onEditMeal} title="Salvar alterações" />
       </Content>
     </Container>
   );

@@ -28,14 +28,16 @@ import {
 
 type MealLayoutProps = {
   onGoBack: () => void;
-  onGoToFeedback: () => void;
   item: Meal;
+  onGoToEditMeal: () => void;
+  onDeleteMeal: (id: string, date: string) => Promise<void>;
 };
 
 export function MealLayout({
   onGoBack,
-  onGoToFeedback,
+  onGoToEditMeal,
   item,
+  onDeleteMeal,
 }: MealLayoutProps) {
   const { colors } = useTheme();
 
@@ -76,7 +78,7 @@ export function MealLayout({
           </View>
           <View>
             <Button
-              onPress={() => {}}
+              onPress={onGoToEditMeal}
               title="Editar refeição"
               icon={
                 <PencilSimpleLine
@@ -88,7 +90,7 @@ export function MealLayout({
             />
             <Button
               secondary
-              onPress={() => {}}
+              onPress={() => onDeleteMeal(item.id, item.date)}
               title="Excluir refeição"
               icon={<Trash size={22} color={colors["gray-1"]} />}
             />

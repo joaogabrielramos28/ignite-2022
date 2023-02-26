@@ -1,8 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
+import { StatisticsParamType } from "../../@types/navigation";
 import { StatisticsLayout } from "./layout";
 
 export function Statistics() {
   const { goBack } = useNavigation();
-  return <StatisticsLayout onBack={goBack} />;
+
+  const { params } = useRoute();
+
+  const { statistics } = params as StatisticsParamType;
+  return <StatisticsLayout {...statistics} onBack={goBack} />;
 }

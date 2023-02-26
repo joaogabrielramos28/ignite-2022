@@ -16,6 +16,7 @@ type StartLayoutProps = {
   onGoToNewMeal: () => void;
   meals: MealMapper[];
   goToMeal: (meal: MealType) => Promise<void>;
+  percentage?: number;
 };
 
 export const StartLayout = ({
@@ -23,12 +24,17 @@ export const StartLayout = ({
   onGoToNewMeal,
   meals,
   goToMeal,
+  percentage,
 }: StartLayoutProps) => {
   const { colors } = useTheme();
   return (
     <Container>
       <Header />
-      <Feedback onPress={onGoToStatics} isHealthy={true} />
+      <Feedback
+        percentage={String(percentage?.toPrecision(4))}
+        onPress={onGoToStatics}
+        isHealthy={true}
+      />
       <ContentWrapper>
         <Title>Refeições</Title>
       </ContentWrapper>

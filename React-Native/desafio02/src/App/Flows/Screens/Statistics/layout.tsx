@@ -17,9 +17,21 @@ import {
 
 type StatisticsLayoutProps = {
   onBack: () => void;
+  percentage: number;
+  sequence: number;
+  mealsQuantity: number;
+  healthyMealsQuantity: number;
+  unhealthyMealsQuantity: number;
 };
 
-export function StatisticsLayout({ onBack }: StatisticsLayoutProps) {
+export function StatisticsLayout({
+  onBack,
+  healthyMealsQuantity,
+  mealsQuantity,
+  percentage,
+  sequence,
+  unhealthyMealsQuantity,
+}: StatisticsLayoutProps) {
   const { colors } = useTheme();
   return (
     <Container>
@@ -30,7 +42,7 @@ export function StatisticsLayout({ onBack }: StatisticsLayoutProps) {
           </TouchableOpacity>
         </BackContainer>
         <HeaderContent>
-          <Percentage>90,86%</Percentage>
+          <Percentage>{String(percentage.toPrecision(4))}%</Percentage>
           <Information>das refeições dentro da dieta</Information>
         </HeaderContent>
       </Header>
@@ -39,25 +51,25 @@ export function StatisticsLayout({ onBack }: StatisticsLayoutProps) {
         <Title>Estatísticas gerais</Title>
 
         <Card
-          title="22"
+          title={String(sequence)}
           subtitle="melhor sequência de pratos dentro da dieta"
           background="default"
         />
         <Card
-          title="109"
+          title={String(mealsQuantity)}
           subtitle="refeições registradas"
           background="default"
         />
 
         <CardGroup>
           <Card
-            title="99"
+            title={String(healthyMealsQuantity)}
             subtitle="refeições dentro da dieta"
             background="success"
           />
           <Card
             hasMarginLeft
-            title="10"
+            title={String(unhealthyMealsQuantity)}
             subtitle="refeições fora da dieta"
             background="error"
           />
