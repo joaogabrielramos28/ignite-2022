@@ -5,6 +5,7 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
+import { NativeBaseProvider } from "native-base";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -12,24 +13,13 @@ export default function App() {
     Roboto_700Bold,
   });
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#202024",
-      }}
-    >
+    <NativeBaseProvider>
       <StatusBar
         backgroundColor="transparent"
         translucent
         barStyle={"light-content"}
       />
-      {fontsLoaded ? (
-        <Text>Loading ...</Text>
-      ) : (
-        <Text>Open up App.tsx to start working on your app!</Text>
-      )}
-    </View>
+      {fontsLoaded ? <View></View> : <View></View>}
+    </NativeBaseProvider>
   );
 }
