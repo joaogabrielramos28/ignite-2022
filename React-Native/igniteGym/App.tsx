@@ -8,6 +8,7 @@ import {
 import { NativeBaseProvider } from "native-base";
 import { Loading } from "@components/Loading";
 import { theme } from "./src/theme";
+import { SignIn } from "@screens/SignIn";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,7 +22,7 @@ export default function App() {
         translucent
         barStyle={"light-content"}
       />
-      {!fontsLoaded ? <View></View> : <Loading />}
+      {fontsLoaded ? <SignIn /> : <Loading />}
     </NativeBaseProvider>
   );
 }
