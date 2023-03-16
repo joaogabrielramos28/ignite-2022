@@ -9,14 +9,60 @@ import {
   ScrollView,
   Skeleton,
   Text,
+  useToast,
   VStack,
 } from "native-base";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 
+import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 export const Profile = () => {
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
+  const [userPhoto, setUserPhoto] = useState<string>(
+    "https://avatars.githubusercontent.com/u/5466341?v=4"
+  );
   const PHOTO_SIZE = 33;
+
+  const toast = useToast();
+
+  const handleUserPhotoSelect = async () => {
+    setPhotoIsLoading(true);
+    try {
+      const photoSelected = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+        aspect: [4, 4],
+        allowsEditing: true,
+      });
+
+      if (photoSelected.canceled) {
+        return;
+      }
+
+      if (photoSelected.assets[0].uri) {
+        const photoInfo = await FileSystem.getInfoAsync(
+          photoSelected.assets[0].uri
+        );
+
+        if (photoInfo.size && photoInfo.size / 1024 / 1024 > 5) {
+          toast.show({
+            title: "A imagem deve ser menor que 5MB",
+            placement: "top",
+            bgColor: "red.500",
+          });
+          return;
+        }
+
+        setUserPhoto(photoSelected.assets[0].uri);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPhotoIsLoading(false);
+    }
+  };
+
   return (
     <KeyboardAvoidingView behavior="padding" flex={1}>
       <VStack flex={1}>
@@ -30,7 +76,7 @@ export const Profile = () => {
             {!photoIsLoading ? (
               <UserPhoto
                 source={{
-                  uri: "https://avatars.githubusercontent.com/u/5466341?v=4",
+                  uri: userPhoto,
                 }}
                 alt="Foto do usuário"
                 size={PHOTO_SIZE}
@@ -44,7 +90,7 @@ export const Profile = () => {
                 endColor="gray.400"
               />
             )}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleUserPhotoSelect}>
               <Text
                 color="green.500"
                 fontWeight="bold"
