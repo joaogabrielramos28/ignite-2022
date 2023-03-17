@@ -11,7 +11,7 @@ export const Routes = () => {
 
   return (
     <NavigationContainer>
-      <AppRoutes />
+      <AuthRoutes />
     </NavigationContainer>
   );
 };
