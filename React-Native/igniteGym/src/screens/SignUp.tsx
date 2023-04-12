@@ -1,4 +1,12 @@
-import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
+import {
+  Center,
+  Heading,
+  Image,
+  ScrollView,
+  Text,
+  VStack,
+  useToast,
+} from "native-base";
 
 import LogoSvg from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
@@ -8,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { api } from "@services/api";
+import { AppError } from "@utils/AppError";
 
 type FormProps = {
   email: string;
@@ -30,6 +40,7 @@ const schema = yup.object({
 
 export const SignUp = () => {
   const { goBack } = useNavigation();
+  const toast = useToast();
 
   const handleGoBack = () => {
     goBack();
@@ -49,8 +60,26 @@ export const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleSignUp = (data: FormProps) => {
-    console.log(data);
+  const handleSignUp = async ({ email, name, password }: FormProps) => {
+    try {
+      const response = await api.post("/users", {
+        name,
+        email,
+        password,
+      });
+      console.log(response.data);
+    } catch (err) {
+      const isAppError = err instanceof AppError;
+      const title = isAppError
+        ? err.message
+        : "Não foi possível criar sua conta. Tente novamente mais tarde.";
+
+      toast.show({
+        title,
+        placement: "top",
+        bgColor: "red.500",
+      });
+    }
   };
 
   return (
