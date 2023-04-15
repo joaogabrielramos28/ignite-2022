@@ -15,7 +15,7 @@ export const Home = () => {
   const { navigate } = useNavigation<AppNavigatorRoutesProps>();
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [groupSelected, setGroupSelected] = useState("Costas");
+  const [groupSelected, setGroupSelected] = useState("antebraço");
   const [groups, setGroups] = useState<string[]>();
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
 
@@ -24,8 +24,10 @@ export const Home = () => {
     fetchExercisesByGroup();
   };
 
-  const handleOpenExerciseDetail = () => {
-    navigate("exercise");
+  const handleOpenExerciseDetail = (exerciseId: string) => {
+    navigate("exercise", {
+      exerciseId,
+    });
   };
 
   async function fetchGroups() {
@@ -74,7 +76,7 @@ export const Home = () => {
   useFocusEffect(
     useCallback(() => {
       fetchExercisesByGroup();
-    }, [])
+    }, [groupSelected])
   );
 
   return (
@@ -121,7 +123,10 @@ export const Home = () => {
               paddingVertical: 20,
             }}
             renderItem={({ item }) => (
-              <ExerciseCard data={item} onPress={handleOpenExerciseDetail} />
+              <ExerciseCard
+                data={item}
+                onPress={() => handleOpenExerciseDetail(item.id)}
+              />
             )}
           />
         </VStack>
