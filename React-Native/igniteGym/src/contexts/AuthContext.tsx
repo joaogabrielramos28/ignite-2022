@@ -1,17 +1,16 @@
 import { UserDTO } from "@dtos/UserDTO";
 import { api } from "@services/api";
 import {
+  storageAuthTokenGet,
+  storageAuthTokenRemove,
+  storageAuthTokenSave,
+} from "@storage/storageAuthToken";
+import {
   storageUserGet,
   storageUserRemove,
   storageUserSave,
 } from "@storage/storageUser";
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: UserDTO | null;
@@ -27,6 +26,24 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
 
+  async function userAndTokenUpdate(userData: UserDTO, token: string) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    setUser(userData);
+  }
+
+  async function storageUserAndTokenSave(userData: UserDTO, token: string) {
+    try {
+      setIsLoadingUserData(true);
+      await storageUserSave(userData);
+      await storageAuthTokenSave(token);
+    } catch (err) {
+      throw err;
+    } finally {
+      setIsLoadingUserData(false);
+    }
+  }
+
   const signIn = async (email: string, password: string) => {
     try {
       const { data } = await api.post("/sessions", {
@@ -34,9 +51,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         password,
       });
 
-      if (data.user) {
-        setUser(data.user);
-        await storageUserSave(data.user);
+      if (data.user && data.token) {
+        await storageUserAndTokenSave(data.user, data.token);
+        await userAndTokenUpdate(data.user, data.token);
       }
     } catch (err) {
       throw err;
@@ -50,6 +67,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(null);
 
       await storageUserRemove();
+      await storageAuthTokenRemove();
     } catch (err) {
       throw err;
     } finally {
@@ -59,9 +77,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loadUserData = async () => {
     try {
-      const user = await storageUserGet();
-      if (user) {
-        setUser(user);
+      setIsLoadingUserData(true);
+
+      const userLogged = await storageUserGet();
+      const token = await storageAuthTokenGet();
+      if (token && userLogged) {
+        userAndTokenUpdate(userLogged, token);
       }
     } catch (err) {
       throw err;
