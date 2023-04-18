@@ -23,6 +23,7 @@ import { ExerciseDTO } from "@dtos/ExerciseDTO";
 import { useEffect, useState } from "react";
 import { AppError } from "@utils/AppError";
 import { Loading } from "@components/Loading";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 type RouteParams = {
   exerciseId: string;
@@ -33,7 +34,7 @@ export const Exercise = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [sendingRegister, setSendingRegister] = useState(false);
 
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation<AppNavigatorRoutesProps>();
   const { params } = useRoute();
   const toast = useToast();
 
@@ -59,6 +60,8 @@ export const Exercise = () => {
         placement: "top",
         bgColor: "red.500",
       });
+
+      navigate("history");
     } finally {
       setIsLoading(false);
     }
@@ -75,6 +78,7 @@ export const Exercise = () => {
         placement: "top",
         bgColor: "green.700",
       });
+      navigate;
     } catch (err) {
       const isAppError = err instanceof AppError;
       const title = isAppError
