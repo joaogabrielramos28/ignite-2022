@@ -19,7 +19,7 @@ import SeriesSvg from "@assets/series.svg";
 import RepetitionsSvg from "@assets/repetitions.svg";
 import { Button } from "@components/Button";
 import { api } from "@services/api";
-import { ExerciseDTO } from "@dtos/exerciseDTO";
+import { ExerciseDTO } from "@dtos/ExerciseDTO";
 import { useEffect, useState } from "react";
 import { AppError } from "@utils/AppError";
 import { Loading } from "@components/Loading";
@@ -31,6 +31,8 @@ type RouteParams = {
 export const Exercise = () => {
   const [exercise, setExercise] = useState<ExerciseDTO>({} as ExerciseDTO);
   const [isLoading, setIsLoading] = useState(true);
+  const [sendingRegister, setSendingRegister] = useState(false);
+
   const { goBack } = useNavigation();
   const { params } = useRoute();
   const toast = useToast();
@@ -61,6 +63,33 @@ export const Exercise = () => {
       setIsLoading(false);
     }
   };
+
+  async function handleExerciseHistoryRegister() {
+    try {
+      setSendingRegister(true);
+      await api.post("/history", {
+        exercise_id: exerciseId,
+      });
+      toast.show({
+        title: "Exercício registrado no seu histórico",
+        placement: "top",
+        bgColor: "green.700",
+      });
+    } catch (err) {
+      const isAppError = err instanceof AppError;
+      const title = isAppError
+        ? err.message
+        : "Não foi possível registrar o exercício";
+
+      toast.show({
+        title,
+        placement: "top",
+        bgColor: "red.500",
+      });
+    } finally {
+      setSendingRegister(false);
+    }
+  }
 
   useEffect(() => {
     fetchExerciseDetails();
@@ -134,7 +163,11 @@ export const Exercise = () => {
                     </Text>
                   </HStack>
                 </HStack>
-                <Button title="Marcar como realizado" />
+                <Button
+                  title="Marcar como realizado"
+                  isLoading={sendingRegister}
+                  onPress={handleExerciseHistoryRegister}
+                />
               </Box>
             </VStack>
           </ScrollView>
