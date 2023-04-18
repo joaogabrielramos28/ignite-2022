@@ -49,6 +49,8 @@ export const Exercise = () => {
       const response = await api.get(`/exercises/${exerciseId}`);
       setExercise(response.data);
       setIsLoading(false);
+
+      navigate("history");
     } catch (err) {
       const isAppError = err instanceof AppError;
       const title = isAppError
@@ -60,8 +62,6 @@ export const Exercise = () => {
         placement: "top",
         bgColor: "red.500",
       });
-
-      navigate("history");
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +78,7 @@ export const Exercise = () => {
         placement: "top",
         bgColor: "green.700",
       });
-      navigate;
+      navigate("history");
     } catch (err) {
       const isAppError = err instanceof AppError;
       const title = isAppError
