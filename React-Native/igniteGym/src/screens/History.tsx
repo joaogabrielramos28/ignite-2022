@@ -1,4 +1,5 @@
 import { HistoryCard } from "@components/HistoryCard";
+import { Loading } from "@components/Loading";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { HistoryGroupGyDateDTO } from "@dtos/HistoryByDayDTO";
 import { HistoryDTO } from "@dtos/HistoryDTO";
@@ -43,33 +44,36 @@ export const History = () => {
   return (
     <VStack flex={1}>
       <ScreenHeader title="Histórico de Exercícios" />
-
-      <SectionList
-        sections={exercises}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <HistoryCard data={item} />}
-        renderSectionHeader={({ section: { title } }) => (
-          <Heading
-            color="gray.200"
-            fontSize="md"
-            mt={10}
-            mb={3}
-            fontFamily="heading"
-          >
-            {title}
-          </Heading>
-        )}
-        contentContainerStyle={
-          exercises.length === 0 && { flex: 1, justifyContent: "center" }
-        }
-        ListEmptyComponent={() => (
-          <Text color="gray.100" textAlign="center">
-            Não há exercicios registrados ainda.{"\n"} Vamo fazer exercícios
-            hoje?
-          </Text>
-        )}
-        px={8}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SectionList
+          sections={exercises}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => <HistoryCard data={item} />}
+          renderSectionHeader={({ section: { title } }) => (
+            <Heading
+              color="gray.200"
+              fontSize="md"
+              mt={10}
+              mb={3}
+              fontFamily="heading"
+            >
+              {title}
+            </Heading>
+          )}
+          contentContainerStyle={
+            exercises.length === 0 && { flex: 1, justifyContent: "center" }
+          }
+          ListEmptyComponent={() => (
+            <Text color="gray.100" textAlign="center">
+              Não há exercicios registrados ainda.{"\n"} Vamo fazer exercícios
+              hoje?
+            </Text>
+          )}
+          px={8}
+        />
+      )}
     </VStack>
   );
 };
