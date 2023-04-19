@@ -14,6 +14,7 @@ import {
 } from "native-base";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import AvatarPlaceholder from "@assets/userPhotoDefault.png";
 
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -81,8 +82,9 @@ export const Profile = () => {
 
   const toast = useToast();
 
-  const handleUserPhotoSelect = async () => {
+  async function handleUserPhotoSelected() {
     setPhotoIsLoading(true);
+
     try {
       const photoSelected = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -102,21 +104,53 @@ export const Profile = () => {
 
         if (photoInfo.size && photoInfo.size / 1024 / 1024 > 5) {
           toast.show({
-            title: "A imagem deve ser menor que 5MB",
+            title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
             placement: "top",
             bgColor: "red.500",
           });
           return;
         }
 
-        setUserPhoto(photoSelected.assets[0].uri);
+        const fileExtension = photoSelected.assets[0].uri.split(".").pop();
+
+        const photoFile = {
+          name: `${user?.name}.${fileExtension}`.toLowerCase(),
+          uri: photoSelected.assets[0].uri,
+          type: `${photoSelected.assets[0].type}/${fileExtension}`,
+        } as any;
+
+        const userPhotoUploadForm = new FormData();
+
+        userPhotoUploadForm.append("avatar", photoFile);
+
+        const avatarUpdatedResponse = await api.patch(
+          "/users/avatar",
+          userPhotoUploadForm,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const userUpdated = user!;
+
+        userUpdated.avatar = avatarUpdatedResponse.data.avatar;
+
+        await updateUserProfile(userUpdated);
+
+        toast.show({
+          title: "Foto atualizada!",
+          placement: "top",
+          bgColor: "green.500",
+        });
       }
     } catch (error) {
       console.log(error);
     } finally {
       setPhotoIsLoading(false);
     }
-  };
+  }
 
   async function handleProfileUpdate(data: FormDataProps) {
     try {
@@ -160,9 +194,13 @@ export const Profile = () => {
           <Center mt={6} px={10}>
             {!photoIsLoading ? (
               <UserPhoto
-                source={{
-                  uri: userPhoto,
-                }}
+                source={
+                  user?.avatar
+                    ? {
+                        uri: `${api.defaults.baseURL}/avatar/${user.avatar}`,
+                      }
+                    : AvatarPlaceholder
+                }
                 alt="Foto do usuário"
                 size={PHOTO_SIZE}
               />
@@ -175,7 +213,7 @@ export const Profile = () => {
                 endColor="gray.400"
               />
             )}
-            <TouchableOpacity onPress={handleUserPhotoSelect}>
+            <TouchableOpacity onPress={handleUserPhotoSelected}>
               <Text
                 color="green.500"
                 fontWeight="bold"
