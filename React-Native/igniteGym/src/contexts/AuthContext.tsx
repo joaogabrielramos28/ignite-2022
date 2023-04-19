@@ -17,6 +17,7 @@ type AuthContextType = {
   isLoadingUserData: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUserProfile(userUpdated: UserDTO): Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -74,6 +75,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoadingUserData(false);
     }
   };
+
+  async function updateUserProfile(userUpdated: UserDTO) {
+    try {
+      setUser(userUpdated);
+      await storageUserSave(userUpdated);
+    } catch (err) {
+      throw err;
+    }
+  }
 
   const loadUserData = async () => {
     try {
