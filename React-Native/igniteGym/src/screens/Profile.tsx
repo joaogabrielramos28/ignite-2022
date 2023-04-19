@@ -128,7 +128,7 @@ export const Profile = () => {
 
       await api.put("/users", data);
 
-      updateUserProfile(userUpdated);
+      await updateUserProfile(userUpdated);
       toast.show({
         title: "Perfil atualizado com sucesso",
         placement: "top",
