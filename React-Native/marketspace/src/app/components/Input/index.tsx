@@ -7,31 +7,10 @@ import {
 } from "native-base";
 import { EyeClosed, Eye } from "phosphor-react-native";
 
-type Props = IInputProps & {
-  isPassword?: boolean;
-};
+type Props = IInputProps;
 
-export const Input = ({ isPassword, ...rest }: Props) => {
+export const Input = ({ ...rest }: Props) => {
   const { colors } = useTheme();
-  const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const PasswordRightElement = () => (
-    <IconButton
-      _pressed={{ bg: "transparent", opacity: 0.3 }}
-      size="xs"
-      icon={
-        !showPassword ? (
-          <EyeClosed size={24} color={colors.gray[300]} />
-        ) : (
-          <Eye size={24} color={colors.gray[300]} />
-        )
-      }
-      onPress={toggleShowPassword}
-    />
-  );
 
   return (
     <NativeBaseInput
@@ -39,8 +18,6 @@ export const Input = ({ isPassword, ...rest }: Props) => {
       isFullWidth
       bgColor="gray.700"
       placeholderTextColor="gray.400"
-      rightElement={isPassword ? <PasswordRightElement /> : undefined}
-      secureTextEntry={!showPassword}
       {...rest}
     />
   );

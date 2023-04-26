@@ -12,5 +12,5 @@ export default function App() {
     Karla_700Bold,
   });
 
-  return <AppProvider>{isLoaded ? <Register /> : <Loading />}</AppProvider>;
+  return <AppProvider>{isLoaded ? <Login /> : <Loading />}</AppProvider>;
 }

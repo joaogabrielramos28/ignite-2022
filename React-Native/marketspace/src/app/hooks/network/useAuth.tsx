@@ -8,6 +8,8 @@ import { RegisterRequestDTO } from "@infra/auth/dtos/requests/RegisterRequestDTO
 
 type AuthContextType = {
   user: IUser | null;
+  login: ({ email, password }: LoginRequestDTO) => Promise<void>;
+  register: (payload: RegisterRequestDTO) => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -18,10 +20,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async ({ email, password }: LoginRequestDTO) => {
     try {
-      const { data } = await authService.login({
+      const data = await authService.login({
         email,
         password,
       });
+      api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
+      setUser(data.user);
     } catch (error) {
       throw error;
     }
@@ -36,7 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, login, register }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
