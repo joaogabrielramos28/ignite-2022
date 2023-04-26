@@ -21,6 +21,9 @@ const theme = extendTheme({
       300: "#EE7979",
     },
   },
+  sizes: {
+    15: 60,
+  },
   fontSizes: {
     xs: 12,
     sm: 14,

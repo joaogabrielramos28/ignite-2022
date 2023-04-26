@@ -2,7 +2,7 @@ import React from "react";
 import { IButtonProps, Button as NativeBaseButton, Text } from "native-base";
 
 type Props = IButtonProps & {
-  title: string;
+  title?: string;
   variant?: "primary" | "secondary" | "light" | "text";
   bold?: boolean;
 };
@@ -38,13 +38,15 @@ export const Button = ({
       }}
       {...rest}
     >
-      <Text
-        fontFamily={bold ? "heading" : "body"}
-        fontSize="sm"
-        color={textColorByVariant}
-      >
-        {title}
-      </Text>
+      {title ? (
+        <Text
+          fontFamily={bold ? "heading" : "body"}
+          fontSize="sm"
+          color={textColorByVariant}
+        >
+          {title}
+        </Text>
+      ) : null}
     </NativeBaseButton>
   );
 };

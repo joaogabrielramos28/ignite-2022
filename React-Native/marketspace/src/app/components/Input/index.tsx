@@ -20,6 +20,7 @@ export const Input = ({ isPassword, ...rest }: Props) => {
 
   const PasswordRightElement = () => (
     <IconButton
+      _pressed={{ bg: "transparent", opacity: 0.3 }}
       size="xs"
       icon={
         !showPassword ? (

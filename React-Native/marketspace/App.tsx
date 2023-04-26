@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { Login } from "@flows/signed-off/Login";
 import { Loading } from "@components/Loading";
 import { AppProvider } from "@providers/index";
+import { Register } from "@flows/signed-off/register";
 
 export default function App() {
   const [isLoaded] = useFonts({
@@ -11,5 +12,5 @@ export default function App() {
     Karla_700Bold,
   });
 
-  return <AppProvider>{isLoaded ? <Login /> : <Loading />}</AppProvider>;
+  return <AppProvider>{isLoaded ? <Register /> : <Loading />}</AppProvider>;
 }
