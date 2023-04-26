@@ -18,6 +18,7 @@ module.exports = function (api) {
             "@hooks": "./src/app/hooks",
             "@routes": "./src/app/routes",
             "@flows": "./src/app/flows",
+            "@providers": "./src/app/providers",
           },
         },
       ],

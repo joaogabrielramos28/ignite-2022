@@ -4,7 +4,7 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@model/*": ["./src/app/model/*"],
+      "@model/*": ["./src/model/*"],
       "@assets/*": ["./src/app/assets/*"],
       "@components/*": ["./src/app/components/*"],
       "@theme/*": ["./src/app/theme/*"],
@@ -13,7 +13,8 @@
       "@utils/*": ["./src/app/utils/*"],
       "@infra/*": ["./src/infra/*"],
       "@hooks/*": ["./src/app/hooks/*"],
-      "@routes/*": ["./src/app/routes/*"]
+      "@routes/*": ["./src/app/routes/*"],
+      "@providers/*": ["./src/app/providers/*"]
     }
   }
 }
