@@ -9,7 +9,12 @@ export const LoginLayout = () => {
     <Center flex={1} bg={"gray.700"}>
       <Image source={Logo} alt="" />
 
-      <Heading color="gray.100" fontFamily={"heading"}>
+      <Heading
+        color="gray.100"
+        fontFamily={"heading"}
+        fontSize={"3xl"}
+        marginTop={4}
+      >
         marketspace
       </Heading>
       <Text color="gray.300" fontSize={"sm"}>
