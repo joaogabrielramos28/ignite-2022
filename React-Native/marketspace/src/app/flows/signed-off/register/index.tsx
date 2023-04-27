@@ -6,6 +6,9 @@ import { Toast, useToast } from "native-base";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
 import { AppError } from "@infra/http/AppError";
 import { useAuth } from "@hooks/network/useAuth";
+import { useNavigation } from "@react-navigation/native";
+import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { Screens } from "@routes/screens";
 export type FormData = {
   avatar: string;
   name: string;
@@ -22,6 +25,11 @@ export const Register = () => {
   const [loadingImage, setLoadingImage] = useState<loadingStates>(
     loadingStatesEnum.STAND_BY
   );
+  const { goBack } = useNavigation<AuthNavigatorRoutesProps>();
+
+  const handleGoToLogin = () => {
+    goBack();
+  };
 
   const handleRegister = async (data: FormData) => {
     try {
@@ -106,6 +114,7 @@ export const Register = () => {
       avatar={avatar}
       loadingImage={loadingImage === loadingStatesEnum.PENDING}
       handleRegister={handleRegister}
+      handleGoToLogin={handleGoToLogin}
     />
   );
 };

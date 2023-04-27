@@ -16,9 +16,10 @@ export type FormData = {
 
 type Props = {
   handleLogin: ({ email, password }: LoginRequestDTO) => Promise<void>;
+  handleGoToRegister: () => void;
 };
 
-export const LoginLayout = ({ handleLogin }: Props) => {
+export const LoginLayout = ({ handleLogin, handleGoToRegister }: Props) => {
   const toast = useToast();
   const {
     control,
@@ -103,7 +104,11 @@ export const LoginLayout = ({ handleLogin }: Props) => {
           <Text color="gray.200" fontSize={"sm"} textAlign="center">
             Ainda não tem acesso?
           </Text>
-          <Button title="Criar uma conta" variant="light" />
+          <Button
+            title="Criar uma conta"
+            variant="light"
+            onPress={handleGoToRegister}
+          />
         </VStack>
       </VStack>
     </Center>

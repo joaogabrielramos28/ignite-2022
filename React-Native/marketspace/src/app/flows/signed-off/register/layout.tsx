@@ -23,6 +23,7 @@ import { Masks } from "react-native-mask-input";
 type Props = {
   handleAddAvatar: () => Promise<void>;
   handleRegister: (data: FormData) => Promise<void>;
+  handleGoToLogin: () => void;
   avatar: string;
   loadingImage: boolean;
 };
@@ -34,6 +35,7 @@ export const RegisterLayout = ({
   avatar,
   loadingImage,
   handleRegister,
+  handleGoToLogin,
 }: Props) => {
   const { colors } = useTheme();
   const {
@@ -176,7 +178,11 @@ export const RegisterLayout = ({
           <Text color="gray.200" fontSize={"sm"} textAlign="center">
             Já tem uma conta?
           </Text>
-          <Button title="Ir para o login" variant="light" />
+          <Button
+            title="Ir para o login"
+            variant="light"
+            onPress={handleGoToLogin}
+          />
         </VStack>
       </VStack>
     </Center>
