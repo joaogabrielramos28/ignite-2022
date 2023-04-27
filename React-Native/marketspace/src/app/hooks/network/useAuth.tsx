@@ -33,9 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (payload: globalThis.FormData) => {
     try {
-      console.log(payload);
-
-      const { data } = await authService.register(payload);
+      await authService.register(payload);
     } catch (error) {
       throw error;
     }
