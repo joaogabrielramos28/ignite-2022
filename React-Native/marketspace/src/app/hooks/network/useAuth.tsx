@@ -1,14 +1,23 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { IUser } from "@model/User";
 import { api } from "@infra/http/api";
 import { AuthService } from "@infra/auth";
 import { LoginRequestDTO } from "@infra/auth/dtos/requests/LoginRequestDTO";
-import { AppError } from "@infra/http/AppError";
-import { RegisterRequestDTO } from "@infra/auth/dtos/requests/RegisterRequestDTO";
+
+import { getUserFromStorage, updateUserToStorage } from "@storage/User";
+import { getTokenFromStorage, updateTokenToStorage } from "@storage/Auth";
+import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
 
 type AuthContextType = {
   user: IUser | null;
   login: ({ email, password }: LoginRequestDTO) => Promise<void>;
+  loadingUserData: boolean;
   register: (payload: globalThis.FormData) => Promise<void>;
 };
 
@@ -17,6 +26,9 @@ const AuthContext = createContext({} as AuthContextType);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const authService = new AuthService();
+  const [loadingUserData, setLoadingUserData] = useState<loadingStates>(
+    loadingStatesEnum.STAND_BY
+  );
 
   const login = async ({ email, password }: LoginRequestDTO) => {
     try {
@@ -26,6 +38,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
       setUser(data.user);
+      updateUserToStorage(data.user);
+      updateTokenToStorage({
+        token: data.token,
+        refresh_token: data["refresh-token"],
+      });
     } catch (error) {
       throw error;
     }
@@ -39,8 +56,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const loadUser = async () => {
+    try {
+      setLoadingUserData(loadingStatesEnum.PENDING);
+      const token = await getTokenFromStorage();
+      const userStorage = await getUserFromStorage();
+
+      if (token && userStorage) {
+        api.defaults.headers["Authorization"] = `Bearer ${token.token}`;
+        setUser(userStorage);
+      }
+    } catch {
+      setUser(null);
+    } finally {
+      setLoadingUserData(loadingStatesEnum.DONE);
+    }
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, login, register }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        register,
+        loadingUserData: loadingUserData === loadingStatesEnum.PENDING,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

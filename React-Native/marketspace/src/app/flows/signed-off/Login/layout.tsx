@@ -23,7 +23,7 @@ export const LoginLayout = ({ handleLogin, handleGoToRegister }: Props) => {
   const toast = useToast();
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<FormData>({
     resolver: yupResolver(LoginSchemaValidation),
@@ -36,12 +36,6 @@ export const LoginLayout = ({ handleLogin, handleGoToRegister }: Props) => {
   const onSubmit = async (data: FormData) => {
     try {
       await handleLogin(data);
-
-      // toast.show({
-      //   title: "Login realizado com sucesso",
-      //   placement: "top",
-      //   bgColor: "blue.300",
-      // });
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError ? error.message : "Erro ao realizar login";
@@ -105,6 +99,7 @@ export const LoginLayout = ({ handleLogin, handleGoToRegister }: Props) => {
             Ainda não tem acesso?
           </Text>
           <Button
+            isLoading={isSubmitting}
             title="Criar uma conta"
             variant="light"
             onPress={handleGoToRegister}
