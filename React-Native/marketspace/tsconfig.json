@@ -14,7 +14,8 @@
       "@infra/*": ["./src/infra/*"],
       "@hooks/*": ["./src/app/hooks/*"],
       "@routes/*": ["./src/app/routes/*"],
-      "@providers/*": ["./src/app/providers/*"]
+      "@providers/*": ["./src/app/providers/*"],
+      "@ts/*": ["./src/app/ts/*"]
     }
   }
 }

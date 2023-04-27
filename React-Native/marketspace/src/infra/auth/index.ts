@@ -25,9 +25,13 @@ export class AuthService {
     }
   }
 
-  public async register(payload: RegisterRequestDTO) {
+  public async register(payload: globalThis.FormData) {
     try {
-      const response = await api.post(this.routes.register, payload);
+      const response = await api.post(this.routes.register, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       return response;
     } catch (error) {

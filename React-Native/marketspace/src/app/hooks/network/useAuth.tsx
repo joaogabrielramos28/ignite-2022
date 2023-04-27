@@ -9,7 +9,7 @@ import { RegisterRequestDTO } from "@infra/auth/dtos/requests/RegisterRequestDTO
 type AuthContextType = {
   user: IUser | null;
   login: ({ email, password }: LoginRequestDTO) => Promise<void>;
-  register: (payload: RegisterRequestDTO) => Promise<void>;
+  register: (payload: globalThis.FormData) => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -31,8 +31,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const register = async (payload: RegisterRequestDTO) => {
+  const register = async (payload: globalThis.FormData) => {
     try {
+      console.log(payload);
+
       const { data } = await authService.register(payload);
     } catch (error) {
       throw error;

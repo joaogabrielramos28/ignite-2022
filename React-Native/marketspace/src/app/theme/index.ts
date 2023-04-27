@@ -23,6 +23,7 @@ const theme = extendTheme({
   },
   sizes: {
     15: 60,
+    22: 88,
   },
   fontSizes: {
     xs: 12,
