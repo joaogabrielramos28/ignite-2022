@@ -1,15 +1,23 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { AuthRoutes } from "./auth.routes";
-import { useTheme } from "native-base";
+import { StatusBar, useTheme } from "native-base";
+import { useAuth } from "@hooks/network/useAuth";
+import { AppRoutes } from "./app.routes";
 
-export const AppRoutes = () => {
+export const Routes = () => {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const theme = DefaultTheme;
   theme.colors.background = colors.gray[600];
 
   return (
     <NavigationContainer theme={theme}>
-      <AuthRoutes />
+      <StatusBar
+        barStyle="dark-content"
+        networkActivityIndicatorVisible
+        translucent
+      />
+      {!!user?.id ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
 };

@@ -6,6 +6,7 @@ import {
 import { Login } from "@flows/signed-off/Login";
 import { Screens } from "./screens";
 import { Register } from "@flows/signed-off/Register";
+
 const { Navigator, Screen } = createStackNavigator();
 
 type AuthRoutes = {
