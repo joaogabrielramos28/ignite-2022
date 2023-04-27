@@ -53,7 +53,7 @@ export const LoginLayout = ({ handleLogin }: Props) => {
     }
   };
   return (
-    <Center flex={1} bg={"gray.600"}>
+    <Center flex={1}>
       <Image source={Logo} alt="" />
 
       <Heading

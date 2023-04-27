@@ -63,7 +63,7 @@ export const RegisterLayout = ({
   };
 
   return (
-    <Center flex={1} bg={"gray.600"} paddingX={12}>
+    <Center flex={1} paddingX={12}>
       <Image source={Logo} alt="" width={15} height={10} />
 
       <Heading
