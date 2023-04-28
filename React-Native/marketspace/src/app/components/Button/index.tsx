@@ -5,12 +5,14 @@ type Props = IButtonProps & {
   title?: string;
   variant?: "primary" | "secondary" | "light" | "text";
   bold?: boolean;
+  textColor?: string;
 };
 
 export const Button = ({
   title,
   variant = "primary",
   bold = true,
+  textColor,
   ...rest
 }: Props) => {
   const colorsScheme = (variant: string) => {
@@ -42,7 +44,7 @@ export const Button = ({
         <Text
           fontFamily={bold ? "heading" : "body"}
           fontSize="sm"
-          color={textColorByVariant}
+          color={textColor ? textColor : textColorByVariant}
         >
           {title}
         </Text>

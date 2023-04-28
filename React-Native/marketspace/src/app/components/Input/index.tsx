@@ -18,6 +18,9 @@ export const Input = ({ ...rest }: Props) => {
       isFullWidth
       bgColor="gray.700"
       placeholderTextColor="gray.400"
+      _input={{
+        fontSize: "md",
+      }}
       borderWidth={0}
       fontSize={"xs"}
       {...rest}
