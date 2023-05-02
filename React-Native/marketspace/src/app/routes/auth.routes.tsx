@@ -10,8 +10,8 @@ import { Register } from "@flows/signed-off/Register";
 const { Navigator, Screen } = createStackNavigator();
 
 type AuthRoutes = {
-  Login: undefined;
-  Register: undefined;
+  [Screens.LOGIN]: undefined;
+  [Screens.REGISTER]: undefined;
 };
 
 export type AuthNavigatorRoutesProps = StackNavigationProp<AuthRoutes>;

@@ -7,12 +7,12 @@ import { useTheme } from "native-base";
 import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
-import { Screens } from "./screens";
+import { Navigators, Screens } from "./screens";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 type AppRoutes = {
-  Home: undefined;
+  [Navigators.HOME_NAVIGATOR]: undefined;
 };
 
 export type AuthNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -23,7 +23,7 @@ export const AppRoutes = () => {
   const { colors, sizes } = useTheme();
   return (
     <Navigator
-      initialRouteName={Screens.HOME}
+      initialRouteName={Navigators.HOME_NAVIGATOR}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
