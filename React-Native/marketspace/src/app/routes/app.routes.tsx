@@ -8,6 +8,7 @@ import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 import { Navigators, Screens } from "./screens";
+import { HomeNavigator } from "@flows/signed-in/Home/navigator";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -38,8 +39,8 @@ export const AppRoutes = () => {
       }}
     >
       <Screen
-        name="Home"
-        component={Home}
+        name={Navigators.HOME_NAVIGATOR}
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <House size={24} weight="bold" color={color} />

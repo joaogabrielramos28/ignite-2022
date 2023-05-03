@@ -18,7 +18,12 @@ export type HomeNavigatorRoutesProps = StackNavigationProp<HomeNavigatorRoutes>;
 
 export const HomeNavigator = () => {
   return (
-    <Navigator>
+    <Navigator
+      initialRouteName={Screens.HOME}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Screen name={Screens.HOME} component={Home} />
       <Screen name={Screens.CREATED_AD} component={CreateAd} />
     </Navigator>

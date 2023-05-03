@@ -12,9 +12,10 @@ import { AdCard } from "./components/AdCard";
 
 type Props = {
   user: IUser | null;
+  handleGoToCreateAd: () => void;
 };
 
-export const HomeLayout = ({ user }: Props) => {
+export const HomeLayout = ({ user, handleGoToCreateAd }: Props) => {
   const { colors } = useTheme();
   const [products, setProducts] = useState([]);
   const { getProducts } = useProducts();
@@ -30,8 +31,6 @@ export const HomeLayout = ({ user }: Props) => {
   if (!user) {
     <Loading />;
   }
-
-  console.log(getProducts());
 
   return (
     <VStack padding={6} safeAreaY space={3} flex={1}>
@@ -52,6 +51,7 @@ export const HomeLayout = ({ user }: Props) => {
           </VStack>
         </HStack>
         <Button
+          onPress={handleGoToCreateAd}
           title="Criar anúncio"
           variant="secondary"
           startIcon={<Plus size={16} color={colors.gray[600]} />}
