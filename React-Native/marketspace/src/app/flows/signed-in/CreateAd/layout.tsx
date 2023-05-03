@@ -12,9 +12,9 @@ import {
   VStack,
 } from "native-base";
 import React from "react";
-import { ImageAdd } from "../components/ImageAdd";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { ImageAdd } from "./ImageAdd";
 
 type Props = {
   goBack: () => void;
@@ -22,8 +22,8 @@ type Props = {
 
 export const CreateAdLayout = ({ goBack }: Props) => {
   return (
-    <ScrollView flex={1}>
-      <Flex justifyContent={"space-between"} flex={1}>
+    <>
+      <ScrollView flex={1}>
         <VStack padding={6} space={3} safeAreaY>
           <Header title="Criar anúncio" onBack={goBack} />
 
@@ -124,12 +124,12 @@ export const CreateAdLayout = ({ goBack }: Props) => {
             </VStack>
           </VStack>
         </VStack>
+      </ScrollView>
 
-        <HStack padding={6} bgColor="gray.700" space={2}>
-          <Button title="Cancelar" flex={1} variant="light" />
-          <Button title="Avançar" flex={1} variant="secondary" />
-        </HStack>
-      </Flex>
-    </ScrollView>
+      <HStack padding={6} bgColor="gray.700" space={2}>
+        <Button title="Cancelar" flex={1} variant="light" />
+        <Button title="Avançar" flex={1} variant="secondary" />
+      </HStack>
+    </>
   );
 };

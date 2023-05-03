@@ -8,9 +8,11 @@ import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 import { Navigators, Screens } from "./screens";
-import { HomeNavigator } from "@flows/signed-in/Home/navigator";
+import { createStackNavigator } from "@react-navigation/stack";
+import { CreateAd } from "@flows/signed-in/CreateAd";
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 type AppRoutes = {
   [Navigators.HOME_NAVIGATOR]: undefined;
@@ -21,10 +23,23 @@ export type AuthNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
 const MockScreen = () => <></>;
 
 export const AppRoutes = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Tabs" component={TabRoutes} />
+      <Stack.Screen name={Screens.HOME} component={Home} />
+      <Stack.Screen name={Screens.CREATED_AD} component={CreateAd} />
+    </Stack.Navigator>
+  );
+};
+
+export const TabRoutes = () => {
   const { colors, sizes } = useTheme();
   return (
-    <Navigator
-      initialRouteName={Navigators.HOME_NAVIGATOR}
+    <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -38,16 +53,16 @@ export const AppRoutes = () => {
         },
       }}
     >
-      <Screen
-        name={Navigators.HOME_NAVIGATOR}
-        component={HomeNavigator}
+      <Tab.Screen
+        name={Screens.HOME}
+        component={Home}
         options={{
           tabBarIcon: ({ color }) => (
             <House size={24} weight="bold" color={color} />
           ),
         }}
       />
-      <Screen
+      <Tab.Screen
         name="Tag"
         component={MockScreen}
         options={{
@@ -56,7 +71,7 @@ export const AppRoutes = () => {
           ),
         }}
       />
-      <Screen
+      <Tab.Screen
         name="Logout"
         component={MockScreen}
         options={{
@@ -69,6 +84,6 @@ export const AppRoutes = () => {
           },
         }}
       />
-    </Navigator>
+    </Tab.Navigator>
   );
 };
