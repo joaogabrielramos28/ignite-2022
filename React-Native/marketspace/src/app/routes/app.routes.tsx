@@ -8,17 +8,22 @@ import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 import { Navigators, Screens } from "./screens";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { CreateAd } from "@flows/signed-in/CreateAd";
+import { useAuth } from "@hooks/network/useAuth";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 type AppRoutes = {
-  [Navigators.HOME_NAVIGATOR]: undefined;
+  [Screens.HOME]: undefined;
+  [Screens.CREATED_AD]: undefined;
 };
 
-export type AuthNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
+export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;
 
 const MockScreen = () => <></>;
 
@@ -38,6 +43,7 @@ export const AppRoutes = () => {
 
 export const TabRoutes = () => {
   const { colors, sizes } = useTheme();
+  const { logout } = useAuth();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -77,7 +83,7 @@ export const TabRoutes = () => {
         options={{
           tabBarButton(props) {
             return (
-              <TouchableOpacity {...props}>
+              <TouchableOpacity {...props} onPress={logout}>
                 <SignOut size={24} weight="bold" color={colors.red[300]} />
               </TouchableOpacity>
             );

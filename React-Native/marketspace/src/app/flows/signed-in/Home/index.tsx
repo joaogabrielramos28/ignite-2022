@@ -3,11 +3,11 @@ import { HomeLayout } from "./layout";
 import { useAuth } from "@hooks/network/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import { Screens } from "@routes/screens";
-import { HomeNavigatorRoutesProps } from "./navigator";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 export const Home = () => {
   const { user } = useAuth();
-  const { navigate } = useNavigation<HomeNavigatorRoutesProps>();
+  const { navigate } = useNavigation<AppNavigatorRoutesProps>();
 
   const handleGoToCreateAd = () => {
     navigate(Screens.CREATED_AD);

@@ -8,7 +8,6 @@ import { AppError } from "@infra/http/AppError";
 import { useAuth } from "@hooks/network/useAuth";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
-import { Screens } from "@routes/screens";
 export type FormData = {
   avatar: string;
   name: string;

@@ -10,8 +10,16 @@ import { api } from "@infra/http/api";
 import { AuthService } from "@infra/auth";
 import { LoginRequestDTO } from "@infra/auth/dtos/requests/LoginRequestDTO";
 
-import { getUserFromStorage, updateUserToStorage } from "@storage/User";
-import { getTokenFromStorage, updateTokenToStorage } from "@storage/Auth";
+import {
+  getUserFromStorage,
+  removeUserFromStorage,
+  updateUserToStorage,
+} from "@storage/User";
+import {
+  getTokenFromStorage,
+  removeTokenFromStorage,
+  updateTokenToStorage,
+} from "@storage/Auth";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
 
 type AuthContextType = {
@@ -19,6 +27,7 @@ type AuthContextType = {
   login: ({ email, password }: LoginRequestDTO) => Promise<void>;
   loadingUserData: boolean;
   register: (payload: globalThis.FormData) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -73,6 +82,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      await removeUserFromStorage();
+      await removeTokenFromStorage();
+      setUser(null);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   useEffect(() => {
     loadUser();
   }, []);
@@ -84,6 +103,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         register,
         loadingUserData: loadingUserData === loadingStatesEnum.PENDING,
+        logout,
       }}
     >
       {children}

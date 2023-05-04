@@ -12,6 +12,7 @@ type ControlledInputProps = IInputProps & {
   error?: boolean;
   errorMessage?: string;
   isMasked?: boolean;
+  sendUnmaskedValue?: boolean;
   mask?: Mask;
 };
 
@@ -22,10 +23,11 @@ export const ControlledInput = ({
   error,
   errorMessage,
   isMasked = false,
+  sendUnmaskedValue = false,
   mask,
   ...rest
 }: ControlledInputProps) => {
-  const { colors, fontSizes } = useTheme();
+  const { colors, fontSizes, fonts } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePassword = () => setShowPassword((prevState) => !prevState);
@@ -42,13 +44,16 @@ export const ControlledInput = ({
                 placeholder={rest.placeholder}
                 placeholderTextColor={colors.gray[400]}
                 value={value}
-                onChangeText={onChange}
+                onChangeText={(masked, unmasked) =>
+                  onChange(sendUnmaskedValue ? unmasked : masked)
+                }
                 mask={mask}
                 style={{
                   backgroundColor: colors.gray[700],
                   padding: 12,
                   borderRadius: 6,
-                  fontSize: fontSizes.xs,
+                  fontSize: fontSizes.md,
+                  fontFamily: fonts.body,
                 }}
               />
             ) : (
