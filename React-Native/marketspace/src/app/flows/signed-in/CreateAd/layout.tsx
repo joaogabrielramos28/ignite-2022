@@ -30,7 +30,7 @@ type Props = {
   goBack: () => void;
   handleAddImages: () => Promise<void>;
   handleRemoveImage: (image: string) => void;
-  handleCreateAd: (data: FormData) => Promise<void>;
+  handleGoToPreview: (data: FormData) => Promise<void>;
   images: string[];
   loadingImage: boolean;
 };
@@ -52,7 +52,7 @@ export const CreateAdLayout = ({
   images,
   handleRemoveImage,
   loadingImage,
-  handleCreateAd,
+  handleGoToPreview,
 }: Props) => {
   const {
     control,
@@ -72,7 +72,7 @@ export const CreateAdLayout = ({
   });
 
   const onSubmit = (data: FormData) => {
-    handleCreateAd(data);
+    handleGoToPreview(data);
   };
 
   return (

@@ -8,6 +8,8 @@ import { Toast } from "native-base";
 import { AppError } from "@infra/http/AppError";
 import { api } from "@infra/http/api";
 import { ProductService } from "@infra/products";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { Screens } from "@routes/screens";
 
 export type FormData = {
   title: string;
@@ -19,7 +21,7 @@ export type FormData = {
 };
 
 export const CreateAd = () => {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation<AppNavigatorRoutesProps>();
   const [images, setImages] = React.useState<string[]>([]);
   const [loadingImage, setLoadingImage] = React.useState(false);
 
@@ -74,35 +76,40 @@ export const CreateAd = () => {
     }
   };
 
-  const handleCreateAd = async (data: FormData) => {
-    try {
-      const response = await productService.createProduct({
-        is_new: data.type === "new",
-        accept_trade: data.acceptExchange,
-        description: data.description,
-        name: data.title,
-        payment_methods: data.paymentMethods,
-        price: Number(data.price),
-      });
+  const handleGoToPreview = async (data: FormData) => {
+    navigate(Screens.PREVIEW_AD, {
+      ...data,
+      price: Number(data.price),
+      images,
+    });
+    // try {
+    //   const response = await productService.createProduct({
+    //     is_new: data.type === "new",
+    //     accept_trade: data.acceptExchange,
+    //     description: data.description,
+    //     name: data.title,
+    //     payment_methods: data.paymentMethods,
+    //     price: Number(data.price),
+    //   });
 
-      await handleCreateProductsImages("49ba18a2-69be-4d0b-8272-85e3d7939937");
+    //   await handleCreateProductsImages("49ba18a2-69be-4d0b-8272-85e3d7939937");
 
-      Toast.show({
-        title: "Anúncio criado com sucesso",
-        placement: "top",
-        bgColor: "blue.300",
-      });
-    } catch (error) {
-      const title =
-        error instanceof AppError ? error.message : "Erro ao criar anúncio";
+    //   Toast.show({
+    //     title: "Anúncio criado com sucesso",
+    //     placement: "top",
+    //     bgColor: "blue.300",
+    //   });
+    // } catch (error) {
+    //   const title =
+    //     error instanceof AppError ? error.message : "Erro ao criar anúncio";
 
-      Toast.show({
-        title,
-        placement: "top",
-        bgColor: "red.300",
-      });
-      console.log(error);
-    }
+    //   Toast.show({
+    //     title,
+    //     placement: "top",
+    //     bgColor: "red.300",
+    //   });
+    //   console.log(error);
+    // }
   };
   return (
     <CreateAdLayout
@@ -111,7 +118,7 @@ export const CreateAd = () => {
       images={images}
       handleRemoveImage={handleRemoveImage}
       loadingImage={loadingImage}
-      handleCreateAd={handleCreateAd}
+      handleGoToPreview={handleGoToPreview}
     />
   );
 };

@@ -7,13 +7,14 @@ import { useTheme } from "native-base";
 import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
-import { Navigators, Screens } from "./screens";
+import { Screens } from "./screens";
 import {
   StackNavigationProp,
   createStackNavigator,
 } from "@react-navigation/stack";
 import { CreateAd } from "@flows/signed-in/CreateAd";
 import { useAuth } from "@hooks/network/useAuth";
+import { PreviewAd } from "@flows/signed-in/PreviewAd";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -21,6 +22,15 @@ const Stack = createStackNavigator();
 type AppRoutes = {
   [Screens.HOME]: undefined;
   [Screens.CREATED_AD]: undefined;
+  [Screens.PREVIEW_AD]: {
+    type: string;
+    title: string;
+    description: string;
+    price: number;
+    acceptExchange: boolean;
+    paymentMethods: string[];
+    images: string[];
+  };
 };
 
 export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;
@@ -37,6 +47,7 @@ export const AppRoutes = () => {
       <Stack.Screen name="Tabs" component={TabRoutes} />
       <Stack.Screen name={Screens.HOME} component={Home} />
       <Stack.Screen name={Screens.CREATED_AD} component={CreateAd} />
+      <Stack.Screen name={Screens.PREVIEW_AD} component={PreviewAd} />
     </Stack.Navigator>
   );
 };

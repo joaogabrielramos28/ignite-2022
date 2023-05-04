@@ -4,8 +4,5 @@ export enum Screens {
   HOME = "Home",
   TAG = "Tag",
   CREATED_AD = "CreatedAd",
-}
-
-export enum Navigators {
-  HOME_NAVIGATOR = "HomeNavigator",
+  PREVIEW_AD = "PreviewAd",
 }
