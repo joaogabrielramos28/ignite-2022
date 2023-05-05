@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Box,
   Center,
@@ -13,12 +13,19 @@ import { ArrowLeft } from "phosphor-react-native";
 type Props = {
   title: string;
   onBack: () => void;
+  customIcon?: JSX.Element;
+  onCustomIconPress?: () => void;
 };
 
-export const Header = ({ title, onBack }: Props) => {
+export const Header = ({
+  title,
+  onBack,
+  customIcon,
+  onCustomIconPress,
+}: Props) => {
   const { colors } = useTheme();
   return (
-    <HStack alignItems="center">
+    <HStack alignItems="center" justifyContent="space-between">
       <IconButton
         _pressed={{
           background: "gray.500",
@@ -32,6 +39,15 @@ export const Header = ({ title, onBack }: Props) => {
           {title}
         </Heading>
       </Center>
+      {!!customIcon && onCustomIconPress ? (
+        <IconButton
+          _pressed={{
+            background: "gray.500",
+          }}
+          icon={customIcon}
+          onPress={onCustomIconPress}
+        />
+      ) : null}
     </HStack>
   );
 };

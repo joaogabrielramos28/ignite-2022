@@ -1,6 +1,7 @@
 import { api } from "@infra/http/api";
 import { CreateProductResponseDTO } from "./dtos/response/CreateProductResponseDTO";
 import { CreateProductRequestDTO } from "./dtos/request/CreateProductRequestDTO";
+import { IProduct } from "@model/Product";
 
 export class ProductService {
   private routes = {
@@ -16,6 +17,18 @@ export class ProductService {
   public async getProducts() {
     try {
       const response = await api.get(this.routes.getProducts);
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getProductById(id: string): Promise<IProduct> {
+    try {
+      const response = await api.get(
+        this.routes.getProductById.replace(":id", id)
+      );
 
       return response.data;
     } catch (error) {

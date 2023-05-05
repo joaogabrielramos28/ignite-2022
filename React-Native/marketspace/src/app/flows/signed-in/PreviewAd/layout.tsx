@@ -120,7 +120,7 @@ export const PreviewAdLayout = ({
 
           <VStack marginTop={8}>
             <Badge
-              w={12}
+              w={16}
               bg="gray.500"
               rounded="full"
               _text={{

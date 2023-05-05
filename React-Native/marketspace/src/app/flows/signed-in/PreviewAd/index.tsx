@@ -7,11 +7,12 @@ import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { ProductService } from "@infra/products";
 import { Toast } from "native-base";
 import { AppError } from "@infra/http/AppError";
+import { Screens } from "@routes/screens";
 
 export const PreviewAd = () => {
   const route = useRoute();
   const { user } = useAuth();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation<AppNavigatorRoutesProps>();
   const data = route.params as PreviewAdParams["data"];
 
   const productService = new ProductService();
@@ -32,7 +33,11 @@ export const PreviewAd = () => {
 
       formData.append("product_id", productId);
 
-      productService.addImages(formData);
+      await productService.addImages(formData);
+
+      navigate(Screens.MY_AD, {
+        adId: productId,
+      });
     } catch (err) {
       throw err;
     }
@@ -50,8 +55,6 @@ export const PreviewAd = () => {
       });
 
       await handleAddProductsImages(product.id);
-
-      goBack();
     } catch (err) {
       const isAppError = err instanceof AppError;
       const title = isAppError ? err.message : "Erro ao criar anúncio";

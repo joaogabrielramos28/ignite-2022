@@ -15,6 +15,7 @@ import {
 import { CreateAd } from "@flows/signed-in/CreateAd";
 import { useAuth } from "@hooks/network/useAuth";
 import { PreviewAd } from "@flows/signed-in/PreviewAd";
+import { MyAd } from "@flows/signed-in/MyAd";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -31,10 +32,15 @@ export type PreviewAdParams = {
   };
 };
 
+export type MyAdParams = {
+  adId: string;
+};
+
 type AppRoutes = {
   [Screens.HOME]: undefined;
   [Screens.CREATED_AD]: undefined;
   [Screens.PREVIEW_AD]: PreviewAdParams;
+  [Screens.MY_AD]: MyAdParams;
 };
 
 export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;
@@ -52,6 +58,7 @@ export const AppRoutes = () => {
       <Stack.Screen name={Screens.HOME} component={Home} />
       <Stack.Screen name={Screens.CREATED_AD} component={CreateAd} />
       <Stack.Screen name={Screens.PREVIEW_AD} component={PreviewAd} />
+      <Stack.Screen name={Screens.MY_AD} component={MyAd} />
     </Stack.Navigator>
   );
 };
