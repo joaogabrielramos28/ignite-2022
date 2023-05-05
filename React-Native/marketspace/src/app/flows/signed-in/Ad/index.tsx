@@ -69,12 +69,13 @@ export const Ad = () => {
 
   const disableAd = async () => {
     try {
-      await productService.updateProductStatus(adId);
+      await productService.updateProductStatus(adId, !data.is_active);
       Toast.show({
-        title: "Anúncio desativado",
+        title: "Anúncio atualizado",
         placement: "top",
         bgColor: "blue.300",
       });
+      fetchAd();
     } catch (err) {
       const isAppError = err instanceof AppError;
       const title = isAppError ? err.message : "Erro ao criar anúncio";

@@ -294,8 +294,8 @@ export const AdLayout = ({
       {isMyAd ? (
         <VStack padding={6} bgColor="gray.700" space={2}>
           <Button
-            title="Desativar anúncio"
-            variant="secondary"
+            title={data.is_active ? "Desativar anúncio" : "Reativar anúncio"}
+            variant={data.is_active ? "secondary" : "primary"}
             leftIcon={<Power color={colors.gray[700]} size={16} />}
             onPress={disableAd}
           />

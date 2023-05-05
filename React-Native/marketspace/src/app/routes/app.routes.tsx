@@ -13,6 +13,7 @@ import { CreateAd } from "@flows/signed-in/CreateAd";
 import { useAuth } from "@hooks/network/useAuth";
 import { PreviewAd } from "@flows/signed-in/PreviewAd";
 import { Ad } from "@flows/signed-in/Ad";
+import { MyAds } from "@flows/signed-in/MyAds";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -88,8 +89,8 @@ export const TabRoutes = () => {
         }}
       />
       <Tab.Screen
-        name="Tag"
-        component={MockScreen}
+        name={Screens.MY_ADS}
+        component={MyAds}
         options={{
           tabBarIcon: ({ color }) => (
             <Tag size={24} weight="bold" color={color} />

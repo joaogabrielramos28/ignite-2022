@@ -12,6 +12,7 @@ export class ProductService {
     changeProductStatus: "/products/:id",
     deleteProduct: "/products/:id",
     addImages: "/products/images",
+    productByUser: "/users/products",
   };
 
   public async getProducts() {
@@ -71,11 +72,24 @@ export class ProductService {
     }
   }
 
-  public async updateProductStatus(productId: string) {
+  public async updateProductStatus(productId: string, status: boolean) {
     try {
-      const response = await api.put(
-        this.routes.changeProductStatus.replace(":id", productId)
+      const response = await api.patch(
+        this.routes.changeProductStatus.replace(":id", productId),
+        {
+          is_active: status,
+        }
       );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getProductsByUser() {
+    try {
+      const response = await api.get(this.routes.productByUser);
+
       return response.data;
     } catch (error) {
       throw error;
