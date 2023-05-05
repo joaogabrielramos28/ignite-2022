@@ -35,11 +35,18 @@ type PreviewAdLayoutProps = {
   data: IProduct;
   loading: boolean;
   goBack: () => void;
+  deleteAd: () => Promise<void>;
+  disableAd: () => Promise<void>;
 };
 
 const WIDTH = Dimensions.get("screen").width;
 
-export const MyAdLayout = ({ data, loading, goBack }: PreviewAdLayoutProps) => {
+export const MyAdLayout = ({
+  data,
+  loading,
+  goBack,
+  deleteAd,
+}: PreviewAdLayoutProps) => {
   const { colors } = useTheme();
 
   const startColor = "gray.400";
@@ -284,7 +291,7 @@ export const MyAdLayout = ({ data, loading, goBack }: PreviewAdLayoutProps) => {
           title="Excluir anúncio"
           variant="light"
           leftIcon={<TrashSimple color={colors.gray[300]} size={16} />}
-          onPress={() => {}}
+          onPress={deleteAd}
         />
       </VStack>
     </>

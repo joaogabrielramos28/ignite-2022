@@ -59,4 +59,26 @@ export class ProductService {
       throw error;
     }
   }
+
+  public async deleteProduct(productId: string) {
+    try {
+      const response = await api.delete(
+        this.routes.deleteProduct.replace(":id", productId)
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async updateProductStatus(productId: string) {
+    try {
+      const response = await api.put(
+        this.routes.changeProductStatus.replace(":id", productId)
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
