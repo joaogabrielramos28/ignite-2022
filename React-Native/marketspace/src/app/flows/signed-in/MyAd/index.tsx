@@ -13,12 +13,16 @@ import { AppError } from "@infra/http/AppError";
 import { MyAdLayout } from "./layout";
 import { IProduct } from "@model/Product";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
+import { Linking } from "react-native";
 
 export const MyAd = () => {
   const route = useRoute();
   const { dispatch } = useNavigation();
   const { adId } = route.params as MyAdParams;
   const [data, setData] = useState<IProduct>({} as IProduct);
+  const { user } = useAuth();
+
+  const isMyAd = data.user_id === user?.id;
 
   const [loadingData, setLoadingData] = useState<loadingStates>(
     loadingStatesEnum.STAND_BY
@@ -82,17 +86,23 @@ export const MyAd = () => {
     }
   };
 
+  const enterInChat = () => {
+    Linking.openURL(`https://wa.me/+55${data.user.tel}`);
+  };
+
   useEffect(() => {
     fetchAd();
   }, []);
 
   return (
     <MyAdLayout
+      enterInChat={enterInChat}
       goBack={goBack}
       data={data}
       loading={loadingData === loadingStatesEnum.PENDING}
       deleteAd={deleteAd}
       disableAd={disableAd}
+      isMyAd={isMyAd}
     />
   );
 };

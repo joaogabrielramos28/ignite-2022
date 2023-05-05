@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HStack, Image, View } from "native-base";
+import { Center, HStack, Image, Text, View } from "native-base";
 import { Dimensions } from "react-native";
 import ReanimatedCarousel from "react-native-reanimated-carousel";
 
@@ -7,6 +7,7 @@ const WIDTH = Dimensions.get("screen").width;
 
 type Props = {
   images: string[];
+  isDisabled?: boolean;
 };
 
 const IndexItem = ({ isActive }: { isActive: boolean }) => {
@@ -22,7 +23,7 @@ const IndexItem = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-export const Carousel = ({ images }: Props) => {
+export const Carousel = ({ images, isDisabled = false }: Props) => {
   const [index, setIndex] = useState(0);
 
   return (
@@ -33,7 +34,31 @@ export const Carousel = ({ images }: Props) => {
       scrollAnimationDuration={1000}
       onSnapToItem={(index) => setIndex(index)}
       renderItem={({ item }) => (
-        <View position="relative" width="100%">
+        <View width="100%" position="relative">
+          {isDisabled ? (
+            <View
+              background={"gray.100"}
+              top={0}
+              width={WIDTH}
+              height={280}
+              left={0}
+              position={"absolute"}
+              opacity={0.6}
+              zIndex={9999}
+            >
+              <Center flex={1}>
+                <Text
+                  color={"gray.700"}
+                  fontSize={"sm"}
+                  fontFamily={"heading"}
+                  textTransform="uppercase"
+                >
+                  Anúncio desativado
+                </Text>
+              </Center>
+            </View>
+          ) : null}
+
           <Image
             width={WIDTH}
             height={280}

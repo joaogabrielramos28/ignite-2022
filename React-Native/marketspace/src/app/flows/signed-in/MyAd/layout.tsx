@@ -23,6 +23,7 @@ import {
   QrCode,
   Tag,
   TrashSimple,
+  WhatsappLogo,
 } from "phosphor-react-native";
 import { Carousel } from "@components/Carousel";
 import { api } from "@infra/http/api";
@@ -34,9 +35,11 @@ import { Dimensions } from "react-native";
 type PreviewAdLayoutProps = {
   data: IProduct;
   loading: boolean;
+  isMyAd: boolean;
   goBack: () => void;
   deleteAd: () => Promise<void>;
   disableAd: () => Promise<void>;
+  enterInChat: () => void;
 };
 
 const WIDTH = Dimensions.get("screen").width;
@@ -46,6 +49,9 @@ export const MyAdLayout = ({
   loading,
   goBack,
   deleteAd,
+  isMyAd,
+  disableAd,
+  enterInChat,
 }: PreviewAdLayoutProps) => {
   const { colors } = useTheme();
 
@@ -98,8 +104,12 @@ export const MyAdLayout = ({
           <Header
             title=""
             onBack={goBack}
-            customIcon={<PencilSimpleLine size={24} color={colors.gray[100]} />}
-            onCustomIconPress={() => {}}
+            customIcon={
+              isMyAd ? (
+                <PencilSimpleLine size={24} color={colors.gray[100]} />
+              ) : undefined
+            }
+            onCustomIconPress={isMyAd ? () => {} : () => {}}
           />
         </VStack>
 
@@ -112,6 +122,7 @@ export const MyAdLayout = ({
           />
         ) : (
           <Carousel
+            isDisabled={!data.is_active}
             images={data?.product_images?.map(
               (image) => `${api.defaults.baseURL}/images/${image.path}`
             )}
@@ -165,7 +176,7 @@ export const MyAdLayout = ({
               />
             ) : (
               <Badge
-                w={12}
+                w={16}
                 bg="gray.500"
                 rounded="full"
                 _text={{
@@ -257,7 +268,7 @@ export const MyAdLayout = ({
             )}
           </HStack>
 
-          <VStack marginTop={4}>
+          <VStack marginTop={4} paddingBottom={4}>
             {loading ? (
               <Skeleton startColor={startColor} endColor={endColor} />
             ) : (
@@ -280,20 +291,46 @@ export const MyAdLayout = ({
           </VStack>
         </VStack>
       </ScrollView>
-      <VStack padding={6} bgColor="gray.700" space={2}>
-        <Button
-          title="Desativar anúncio"
-          variant="secondary"
-          leftIcon={<Power color={colors.gray[700]} size={16} />}
-          onPress={() => {}}
-        />
-        <Button
-          title="Excluir anúncio"
-          variant="light"
-          leftIcon={<TrashSimple color={colors.gray[300]} size={16} />}
-          onPress={deleteAd}
-        />
-      </VStack>
+      {isMyAd ? (
+        <VStack padding={6} bgColor="gray.700" space={2}>
+          <Button
+            title="Desativar anúncio"
+            variant="secondary"
+            leftIcon={<Power color={colors.gray[700]} size={16} />}
+            onPress={disableAd}
+          />
+          <Button
+            title="Excluir anúncio"
+            variant="light"
+            leftIcon={<TrashSimple color={colors.gray[300]} size={16} />}
+            onPress={deleteAd}
+          />
+        </VStack>
+      ) : (
+        <HStack
+          padding={6}
+          bgColor="gray.700"
+          space={2}
+          justifyContent="space-between"
+        >
+          <HStack alignItems="center" space={2}>
+            <Text color="blue.600" fontSize="sm">
+              R$
+            </Text>
+            <Heading color="blue.600" fontSize="xl" fontFamily="heading">
+              {formattedMoney(Number(data.price))}
+            </Heading>
+          </HStack>
+
+          <Button
+            title="Entrar em contato"
+            leftIcon={
+              <WhatsappLogo color={colors.gray[700]} weight="fill" size={16} />
+            }
+            onPress={enterInChat}
+          />
+        </HStack>
+      )}
     </>
   );
 };
