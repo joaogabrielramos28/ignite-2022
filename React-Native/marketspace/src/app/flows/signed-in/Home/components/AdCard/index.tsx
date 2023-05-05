@@ -1,14 +1,7 @@
+import { api } from "@infra/http/api";
 import { IProduct } from "@model/Product";
-import {
-  Avatar,
-  Badge,
-  Box,
-  FlatList,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from "native-base";
+import { formattedMoney } from "@utils/formatMoney";
+import { Avatar, Badge, Box, HStack, Image, Text, VStack } from "native-base";
 import React from "react";
 
 type Props = {
@@ -20,12 +13,12 @@ export const AdCard = ({ data }: Props) => {
   const badgeColor = is_new ? "blue.600" : "gray.700";
   const badgeText = is_new ? "NOVO" : "USADO";
   return (
-    <Box width={40} position={"relative"}>
+    <Box width={40} position={"relative"} marginTop={4}>
       <Image
         w={"100%"}
         height={32}
         source={{
-          uri: "https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+          uri: `${api.defaults.baseURL}/images/${data.product_images[0]?.path}`,
         }}
         alt=""
         borderRadius="6px"
@@ -36,7 +29,15 @@ export const AdCard = ({ data }: Props) => {
         width={"100%"}
         padding={1}
       >
-        <Avatar w={6} h={6} borderWidth={1} borderColor={"gray.700"} />
+        <Avatar
+          w={6}
+          h={6}
+          borderWidth={1}
+          borderColor={"gray.700"}
+          source={{
+            uri: `${api.defaults.baseURL}/images/${data.user.avatar}`,
+          }}
+        />
         <Badge
           _text={{
             color: "gray.700",
@@ -58,7 +59,7 @@ export const AdCard = ({ data }: Props) => {
             R$
           </Text>
           <Text fontSize="md" fontFamily="heading" color="gray.100">
-            {(data.price / 100).toFixed(2)}
+            {formattedMoney(data.price)}
           </Text>
         </HStack>
       </VStack>

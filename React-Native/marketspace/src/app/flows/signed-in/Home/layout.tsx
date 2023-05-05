@@ -1,36 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@components/Button";
-import { Avatar, HStack, Heading, Text, VStack, useTheme } from "native-base";
+import {
+  Avatar,
+  Box,
+  FlatList,
+  HStack,
+  Heading,
+  Text,
+  VStack,
+  useTheme,
+} from "native-base";
 import { Plus } from "phosphor-react-native";
 import { IUser } from "@model/User";
 import { api } from "@infra/http/api";
 import { Loading } from "@components/Loading";
 import { MyAdsCard } from "./components/MyAdsCard";
 import { SearchInput } from "./components/SearchInput";
-import { useProducts } from "@hooks/network/useProducts";
+
 import { AdCard } from "./components/AdCard";
+import { IProduct } from "@model/Product";
 
 type Props = {
   user: IUser | null;
   handleGoToCreateAd: () => void;
+  ads: IProduct[];
 };
 
-export const HomeLayout = ({ user, handleGoToCreateAd }: Props) => {
+export const HomeLayout = ({ user, handleGoToCreateAd, ads }: Props) => {
   const { colors } = useTheme();
-  const [products, setProducts] = useState([]);
-  const { getProducts } = useProducts();
-
-  useEffect(() => {
-    async function loadProducts() {
-      const response = await getProducts();
-      setProducts(response);
-    }
-    loadProducts();
-  }, []);
 
   if (!user) {
     <Loading />;
   }
+
+  const _renderItem = ({ item }: { item: IProduct }) => {
+    return (
+      <AdCard
+        key={item.id}
+        data={{
+          ...item,
+        }}
+      />
+    );
+  };
 
   return (
     <VStack padding={6} safeAreaY space={3} flex={1}>
@@ -58,7 +70,7 @@ export const HomeLayout = ({ user, handleGoToCreateAd }: Props) => {
         />
       </HStack>
 
-      <VStack marginTop={8}>
+      <VStack marginTop={8} flex={1}>
         <Text fontSize={"sm"} color={"gray.300"}>
           Seus produtos anunciados para venda
         </Text>
@@ -71,17 +83,20 @@ export const HomeLayout = ({ user, handleGoToCreateAd }: Props) => {
           </Text>
 
           <SearchInput />
-          <AdCard
-            data={{
-              accept_trade: true,
-              description: "Produto em ótimo estado",
-              is_new: true,
-              name: "Produto",
-              payment_methods: [""],
-              price: 100,
-            }}
-          />
         </VStack>
+        <FlatList
+          contentContainerStyle={{
+            paddingBottom: 32,
+            flexGrow: 1,
+          }}
+          numColumns={2}
+          columnWrapperStyle={{
+            gap: 16,
+          }}
+          marginTop={4}
+          data={ads}
+          renderItem={_renderItem}
+        />
       </VStack>
     </VStack>
   );
