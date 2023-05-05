@@ -1,8 +1,5 @@
 import { Home } from "@flows/signed-in/Home";
-import {
-  createBottomTabNavigator,
-  BottomTabNavigationProp,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "native-base";
 import { House, SignOut, Tag } from "phosphor-react-native";
 import React from "react";
@@ -15,7 +12,7 @@ import {
 import { CreateAd } from "@flows/signed-in/CreateAd";
 import { useAuth } from "@hooks/network/useAuth";
 import { PreviewAd } from "@flows/signed-in/PreviewAd";
-import { MyAd } from "@flows/signed-in/MyAd";
+import { Ad } from "@flows/signed-in/Ad";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,7 +29,7 @@ export type PreviewAdParams = {
   };
 };
 
-export type MyAdParams = {
+export type AdParams = {
   adId: string;
 };
 
@@ -40,7 +37,7 @@ type AppRoutes = {
   [Screens.HOME]: undefined;
   [Screens.CREATED_AD]: undefined;
   [Screens.PREVIEW_AD]: PreviewAdParams;
-  [Screens.MY_AD]: MyAdParams;
+  [Screens.AD]: AdParams;
 };
 
 export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;
@@ -58,7 +55,7 @@ export const AppRoutes = () => {
       <Stack.Screen name={Screens.HOME} component={Home} />
       <Stack.Screen name={Screens.CREATED_AD} component={CreateAd} />
       <Stack.Screen name={Screens.PREVIEW_AD} component={PreviewAd} />
-      <Stack.Screen name={Screens.MY_AD} component={MyAd} />
+      <Stack.Screen name={Screens.AD} component={Ad} />
     </Stack.Navigator>
   );
 };

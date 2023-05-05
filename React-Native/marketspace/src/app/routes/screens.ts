@@ -5,5 +5,6 @@ export enum Screens {
   TAG = "Tag",
   CREATED_AD = "CreatedAd",
   PREVIEW_AD = "PreviewAd",
+  AD = "Ad",
   MY_AD = "MyAd",
 }

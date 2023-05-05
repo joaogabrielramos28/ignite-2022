@@ -44,7 +44,7 @@ type PreviewAdLayoutProps = {
 
 const WIDTH = Dimensions.get("screen").width;
 
-export const MyAdLayout = ({
+export const AdLayout = ({
   data,
   loading,
   goBack,
