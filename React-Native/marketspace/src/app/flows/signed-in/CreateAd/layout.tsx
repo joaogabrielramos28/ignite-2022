@@ -14,7 +14,7 @@ import {
   VStack,
 } from "native-base";
 import React from "react";
-import { Input } from "@components/Input";
+
 import { Button } from "@components/Button";
 import { Controller, useForm } from "react-hook-form";
 import { ControlledInput } from "@components/ControlledInput";

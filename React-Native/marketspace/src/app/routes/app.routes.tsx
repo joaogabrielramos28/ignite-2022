@@ -19,18 +19,22 @@ import { PreviewAd } from "@flows/signed-in/PreviewAd";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-type AppRoutes = {
-  [Screens.HOME]: undefined;
-  [Screens.CREATED_AD]: undefined;
-  [Screens.PREVIEW_AD]: {
-    type: string;
+export type PreviewAdParams = {
+  data: {
     title: string;
     description: string;
-    price: number;
+    type: string;
+    price: string;
     acceptExchange: boolean;
     paymentMethods: string[];
     images: string[];
   };
+};
+
+type AppRoutes = {
+  [Screens.HOME]: undefined;
+  [Screens.CREATED_AD]: undefined;
+  [Screens.PREVIEW_AD]: PreviewAdParams;
 };
 
 export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;

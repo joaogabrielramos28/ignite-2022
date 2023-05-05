@@ -38,14 +38,8 @@ export class ProductService {
     }
   }
 
-  public async addImages(productId: string, images: string[]) {
+  public async addImages(formData: FormData) {
     try {
-      const formData = new FormData();
-
-      images.forEach((image) => formData.append("images", image));
-
-      formData.append("product_id", productId);
-
       const response = await api.post(this.routes.addImages, formData);
       return response.data;
     } catch (error) {
