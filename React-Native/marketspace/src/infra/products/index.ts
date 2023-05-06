@@ -86,7 +86,7 @@ export class ProductService {
     }
   }
 
-  public async getProductsByUser() {
+  public async getProductsByUser(): Promise<IProduct[]> {
     try {
       const response = await api.get(this.routes.productByUser);
 

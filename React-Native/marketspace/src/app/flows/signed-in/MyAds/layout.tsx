@@ -18,13 +18,21 @@ import { CaretDown, Plus } from "phosphor-react-native";
 import React from "react";
 import { AdCard } from "../Home/components/AdCard";
 import { Loading } from "@components/Loading";
+import { FilterMyAds } from ".";
 
 type MyAdsLayoutProps = {
   loading: boolean;
   myAds: IProduct[];
+  filter: FilterMyAds;
+  handleChangeFilter: (filter: FilterMyAds) => void;
 };
 
-export const MyAdsLayout = ({ loading, myAds }: MyAdsLayoutProps) => {
+export const MyAdsLayout = ({
+  loading,
+  myAds,
+  handleChangeFilter,
+  filter,
+}: MyAdsLayoutProps) => {
   const { colors } = useTheme();
 
   const _renderItem = ({ item }: { item: IProduct }) => {
@@ -80,11 +88,12 @@ export const MyAdsLayout = ({ loading, myAds }: MyAdsLayoutProps) => {
         )}
 
         <Select
+          onValueChange={(value) => handleChangeFilter(value as FilterMyAds)}
           color="gray.100"
           dropdownIcon={<CaretDown size={16} />}
           minWidth="100"
           defaultValue="all"
-          selectedValue="all"
+          selectedValue={filter}
         >
           <Select.Item label="Todos" value="all" />
           <Select.Item label="Ativos" value="active" />

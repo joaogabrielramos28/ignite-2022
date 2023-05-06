@@ -7,11 +7,14 @@ import { ProductService } from "@infra/products";
 import { useFocusEffect } from "@react-navigation/native";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
 
+export type FilterMyAds = "all" | "active" | "inactive";
+
 export const MyAds = () => {
   const [myAds, setMyAds] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<loadingStates>(
     loadingStatesEnum.STAND_BY
   );
+  const [filter, setFilter] = useState<FilterMyAds>("all");
 
   const productService = new ProductService();
 
@@ -32,15 +35,28 @@ export const MyAds = () => {
     }
   };
 
+  const handleChangeFilter = async (filter: FilterMyAds) => {
+    setFilter(filter);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       fetchMyAds();
     }, [])
   );
+
+  const filteredMyAds = myAds.filter((ad) => {
+    if (filter === "all") return true;
+    if (filter === "active") return ad.is_active === true;
+    if (filter === "inactive") return ad.is_active === false;
+  });
+
   return (
     <MyAdsLayout
+      filter={filter}
+      handleChangeFilter={handleChangeFilter}
       loading={loading === loadingStatesEnum.PENDING}
-      myAds={myAds}
+      myAds={filteredMyAds}
     />
   );
 };
