@@ -25,6 +25,7 @@ type MyAdsLayoutProps = {
   myAds: IProduct[];
   filter: FilterMyAds;
   handleChangeFilter: (filter: FilterMyAds) => void;
+  handleGoToCreateAd: () => void;
 };
 
 export const MyAdsLayout = ({
@@ -32,6 +33,7 @@ export const MyAdsLayout = ({
   myAds,
   handleChangeFilter,
   filter,
+  handleGoToCreateAd,
 }: MyAdsLayoutProps) => {
   const { colors } = useTheme();
 
@@ -60,6 +62,7 @@ export const MyAdsLayout = ({
           _pressed={{
             background: "gray.500",
           }}
+          onPress={handleGoToCreateAd}
         />
       </HStack>
 

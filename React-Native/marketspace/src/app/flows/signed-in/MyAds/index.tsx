@@ -4,12 +4,15 @@ import { IProduct } from "@model/Product";
 import { AppError } from "@infra/http/AppError";
 import { Toast } from "native-base";
 import { ProductService } from "@infra/products";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { Screens } from "@routes/screens";
 
 export type FilterMyAds = "all" | "active" | "inactive";
 
 export const MyAds = () => {
+  const { navigate } = useNavigation<AppNavigatorRoutesProps>();
   const [myAds, setMyAds] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<loadingStates>(
     loadingStatesEnum.STAND_BY
@@ -51,12 +54,17 @@ export const MyAds = () => {
     if (filter === "inactive") return ad.is_active === false;
   });
 
+  const handleGoToCreateAd = () => {
+    navigate(Screens.CREATED_AD);
+  };
+
   return (
     <MyAdsLayout
       filter={filter}
       handleChangeFilter={handleChangeFilter}
       loading={loading === loadingStatesEnum.PENDING}
       myAds={filteredMyAds}
+      handleGoToCreateAd={handleGoToCreateAd}
     />
   );
 };
