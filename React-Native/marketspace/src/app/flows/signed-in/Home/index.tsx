@@ -10,6 +10,13 @@ import { ProductService } from "@infra/products";
 import { IProduct } from "@model/Product";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
 import { useDebounce } from "@hooks/presentation/useDebounce";
+import { GetProductRequestDTO } from "@infra/products/dtos/request/GetProductRequestDTO";
+
+export type FilterStateType = {
+  condition?: "new" | "used";
+  acceptExchange: boolean;
+  paymentMethods: string[];
+};
 
 export const Home = () => {
   const { user } = useAuth();
@@ -24,6 +31,19 @@ export const Home = () => {
   const [isOpenFilterActionSheet, setIsOpenFilterActionSheet] =
     useState<boolean>(false);
 
+  const [filterState, setFilterState] = useState<FilterStateType>(
+    {} as FilterStateType
+  );
+
+  const handleChangeFilter = (filter: Partial<FilterStateType>) => {
+    setFilterState((prev) => {
+      return {
+        ...prev,
+        ...filter,
+      };
+    });
+  };
+
   const toggleFilterActionSheet = () => {
     setIsOpenFilterActionSheet((prev) => !prev);
   };
@@ -33,11 +53,18 @@ export const Home = () => {
   };
   const searchDebounce = useDebounce(search, 500);
 
-  const getAds = async () => {
+  const getAds = async ({
+    accept_trade,
+    is_new,
+    payment_method,
+  }: GetProductRequestDTO) => {
     try {
       setLoading(loadingStatesEnum.PENDING);
       const response = await productService.getProducts({
         query: searchDebounce,
+        accept_trade,
+        is_new,
+        payment_method,
       });
       setAds(response);
       await getMyAds();
@@ -79,10 +106,12 @@ export const Home = () => {
     setSearch(search);
   };
 
+  const applyFilter = () => {};
+
   const handleOpenFilterActionSheet = () => {};
 
   useEffect(() => {
-    getAds();
+    getAds({});
   }, [searchDebounce]);
   return (
     <HomeLayout
@@ -96,6 +125,8 @@ export const Home = () => {
       search={search}
       toggleFilterActionSheet={toggleFilterActionSheet}
       isOpenFilterActionSheet={isOpenFilterActionSheet}
+      handleChangeFilter={handleChangeFilter}
+      filterState={filterState}
     />
   );
 };

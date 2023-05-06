@@ -6,6 +6,7 @@ import {
   HStack,
   Heading,
   IconButton,
+  Pressable,
   Switch,
   Text,
   VStack,
@@ -13,14 +14,30 @@ import {
 } from "native-base";
 import { X, XCircle } from "phosphor-react-native";
 import React from "react";
+import { FilterStateType } from "../..";
 
 type Props = {
   isOpen: boolean;
+  filterState: FilterStateType;
   onClose: () => void;
+  handleChangeFilter: (filter: Partial<FilterStateType>) => void;
 };
 
-export const FilterSheet = ({ isOpen, onClose }: Props) => {
+export const FilterSheet = ({
+  isOpen,
+  onClose,
+  filterState,
+  handleChangeFilter,
+}: Props) => {
   const { colors } = useTheme();
+  const badgeSelected = {
+    bgColor: "blue.300",
+    color: "gray.700",
+  };
+
+  const handleApplyFilter = () => {
+    console.log("filterState", filterState);
+  };
   return (
     <Actionsheet isOpen={isOpen} onClose={onClose}>
       <Actionsheet.Content padding={6}>
@@ -42,38 +59,100 @@ export const FilterSheet = ({ isOpen, onClose }: Props) => {
           </Text>
 
           <HStack space={2} mt={3}>
-            <Badge
-              w={16}
-              padding={1}
-              bgColor="blue.300"
-              rounded="full"
-              _text={{
-                color: "gray.700",
-                fontFamily: "heading",
-              }}
-              endIcon={
-                <IconButton
-                  size="xs"
-                  padding={0}
-                  icon={
-                    <XCircle size={16} color={colors.gray[700]} weight="fill" />
-                  }
-                />
+            <Pressable
+              onPress={() =>
+                handleChangeFilter({
+                  condition: "new",
+                })
               }
             >
-              Novo
-            </Badge>
-            <Badge
-              w={16}
-              bgColor="gray.500"
-              rounded="full"
-              _text={{
-                color: "gray.300",
-                fontFamily: "heading",
-              }}
+              <Badge
+                w={16}
+                padding={1}
+                bgColor={
+                  filterState.condition === "new"
+                    ? badgeSelected.bgColor
+                    : "gray.500"
+                }
+                rounded="full"
+                _text={{
+                  color:
+                    filterState.condition === "new"
+                      ? badgeSelected.color
+                      : "gray.300",
+                  fontFamily: "heading",
+                }}
+                endIcon={
+                  filterState.condition === "new" ? (
+                    <IconButton
+                      onPress={() =>
+                        handleChangeFilter({
+                          condition: undefined,
+                        })
+                      }
+                      size="xs"
+                      padding={0}
+                      icon={
+                        <XCircle
+                          size={16}
+                          color={colors.gray[700]}
+                          weight="fill"
+                        />
+                      }
+                    />
+                  ) : undefined
+                }
+              >
+                Novo
+              </Badge>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                handleChangeFilter({
+                  condition: "used",
+                })
+              }
             >
-              Usado
-            </Badge>
+              <Badge
+                w={16}
+                padding={1}
+                bgColor={
+                  filterState.condition === "used"
+                    ? badgeSelected.bgColor
+                    : "gray.500"
+                }
+                rounded="full"
+                _text={{
+                  color:
+                    filterState.condition === "used"
+                      ? badgeSelected.color
+                      : "gray.300",
+                  fontFamily: "heading",
+                }}
+                endIcon={
+                  filterState.condition === "used" ? (
+                    <IconButton
+                      onPress={() =>
+                        handleChangeFilter({
+                          condition: undefined,
+                        })
+                      }
+                      size="xs"
+                      padding={0}
+                      icon={
+                        <XCircle
+                          size={16}
+                          color={colors.gray[700]}
+                          weight="fill"
+                        />
+                      }
+                    />
+                  ) : undefined
+                }
+              >
+                Usado
+              </Badge>
+            </Pressable>
           </HStack>
 
           <VStack mt={4}>
@@ -81,7 +160,15 @@ export const FilterSheet = ({ isOpen, onClose }: Props) => {
               Aceita troca?
             </Text>
 
-            <Switch colorScheme="blue" marginTop={3} />
+            <Switch
+              colorScheme="blue"
+              marginTop={3}
+              onValueChange={(value) =>
+                handleChangeFilter({
+                  acceptExchange: value,
+                })
+              }
+            />
           </VStack>
 
           <VStack mt={4}>
@@ -89,8 +176,14 @@ export const FilterSheet = ({ isOpen, onClose }: Props) => {
               Meios de pagamento aceitos
             </Text>
 
-            <Checkbox.Group onChange={() => {}}>
-              <VStack space={2}>
+            <Checkbox.Group
+              onChange={(values) =>
+                handleChangeFilter({
+                  paymentMethods: values,
+                })
+              }
+            >
+              <VStack space={2} mt={2}>
                 <Checkbox value="boleto" colorScheme="blue">
                   Boleto
                 </Checkbox>
@@ -113,7 +206,12 @@ export const FilterSheet = ({ isOpen, onClose }: Props) => {
 
         <HStack space={4} mt={16}>
           <Button title="Resetar filtros" flex={1} variant="light" />
-          <Button title="Aplicar filtros" flex={1} variant="secondary" />
+          <Button
+            title="Aplicar filtros"
+            flex={1}
+            variant="secondary"
+            onPress={handleApplyFilter}
+          />
         </HStack>
       </Actionsheet.Content>
     </Actionsheet>

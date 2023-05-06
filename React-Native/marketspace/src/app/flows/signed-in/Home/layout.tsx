@@ -21,6 +21,7 @@ import { SearchInput } from "./components/SearchInput";
 import { AdCard } from "./components/AdCard";
 import { IProduct } from "@model/Product";
 import { FilterSheet } from "./components/FilterSheet";
+import { FilterStateType } from ".";
 
 type Props = {
   user: IUser | null;
@@ -29,10 +30,12 @@ type Props = {
   myAdsCount: number;
   search: string;
   isOpenFilterActionSheet: boolean;
+  filterState: FilterStateType;
   handleGoToCreateAd: () => void;
   handleNavigateToMyAds: () => void;
   handleSearch: (search: string) => void;
   toggleFilterActionSheet: () => void;
+  handleChangeFilter: (filter: Partial<FilterStateType>) => void;
 };
 
 export const HomeLayout = ({
@@ -46,6 +49,8 @@ export const HomeLayout = ({
   search,
   isOpenFilterActionSheet,
   toggleFilterActionSheet,
+  filterState,
+  handleChangeFilter,
 }: Props) => {
   const { colors } = useTheme();
 
@@ -136,6 +141,8 @@ export const HomeLayout = ({
         )}
       </VStack>
       <FilterSheet
+        filterState={filterState}
+        handleChangeFilter={handleChangeFilter}
         isOpen={isOpenFilterActionSheet}
         onClose={toggleFilterActionSheet}
       />
