@@ -21,6 +21,12 @@ export const Home = () => {
     loadingStatesEnum.STAND_BY
   );
   const [search, setSearch] = useState<string>("");
+  const [isOpenFilterActionSheet, setIsOpenFilterActionSheet] =
+    useState<boolean>(false);
+
+  const toggleFilterActionSheet = () => {
+    setIsOpenFilterActionSheet((prev) => !prev);
+  };
 
   const handleGoToCreateAd = () => {
     navigate(Screens.CREATED_AD);
@@ -73,6 +79,8 @@ export const Home = () => {
     setSearch(search);
   };
 
+  const handleOpenFilterActionSheet = () => {};
+
   useEffect(() => {
     getAds();
   }, [searchDebounce]);
@@ -86,6 +94,8 @@ export const Home = () => {
       myAdsCount={myAdsCount}
       handleSearch={handleSearch}
       search={search}
+      toggleFilterActionSheet={toggleFilterActionSheet}
+      isOpenFilterActionSheet={isOpenFilterActionSheet}
     />
   );
 };

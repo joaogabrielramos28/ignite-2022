@@ -20,6 +20,7 @@ import { SearchInput } from "./components/SearchInput";
 
 import { AdCard } from "./components/AdCard";
 import { IProduct } from "@model/Product";
+import { FilterSheet } from "./components/FilterSheet";
 
 type Props = {
   user: IUser | null;
@@ -27,9 +28,11 @@ type Props = {
   loading: boolean;
   myAdsCount: number;
   search: string;
+  isOpenFilterActionSheet: boolean;
   handleGoToCreateAd: () => void;
   handleNavigateToMyAds: () => void;
   handleSearch: (search: string) => void;
+  toggleFilterActionSheet: () => void;
 };
 
 export const HomeLayout = ({
@@ -41,6 +44,8 @@ export const HomeLayout = ({
   handleNavigateToMyAds,
   handleSearch,
   search,
+  isOpenFilterActionSheet,
+  toggleFilterActionSheet,
 }: Props) => {
   const { colors } = useTheme();
 
@@ -106,7 +111,11 @@ export const HomeLayout = ({
             Compre produtos variados
           </Text>
 
-          <SearchInput onChange={handleSearch} value={search} />
+          <SearchInput
+            onChange={handleSearch}
+            value={search}
+            onPress={toggleFilterActionSheet}
+          />
         </VStack>
         {loading ? (
           <Loading />
@@ -126,6 +135,10 @@ export const HomeLayout = ({
           />
         )}
       </VStack>
+      <FilterSheet
+        isOpen={isOpenFilterActionSheet}
+        onClose={toggleFilterActionSheet}
+      />
     </VStack>
   );
 };
