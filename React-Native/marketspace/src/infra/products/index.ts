@@ -2,6 +2,7 @@ import { api } from "@infra/http/api";
 import { CreateProductResponseDTO } from "./dtos/response/CreateProductResponseDTO";
 import { CreateProductRequestDTO } from "./dtos/request/CreateProductRequestDTO";
 import { IProduct } from "@model/Product";
+import { GetProductRequestDTO } from "./dtos/request/GetProductRequestDTO";
 
 export class ProductService {
   private routes = {
@@ -15,9 +16,11 @@ export class ProductService {
     productByUser: "/users/products",
   };
 
-  public async getProducts() {
+  public async getProducts(params: GetProductRequestDTO) {
     try {
-      const response = await api.get(this.routes.getProducts);
+      const response = await api.get(this.routes.getProducts, {
+        params: { query: params.query },
+      });
 
       return response.data;
     } catch (error) {

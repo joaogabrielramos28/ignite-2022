@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { HomeLayout } from "./layout";
 import { useAuth } from "@hooks/network/useAuth";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +9,7 @@ import { Toast } from "native-base";
 import { ProductService } from "@infra/products";
 import { IProduct } from "@model/Product";
 import { loadingStates, loadingStatesEnum } from "@ts/types/loading";
+import { useDebounce } from "@hooks/presentation/useDebounce";
 
 export const Home = () => {
   const { user } = useAuth();
@@ -19,15 +20,19 @@ export const Home = () => {
   const [loading, setLoading] = useState<loadingStates>(
     loadingStatesEnum.STAND_BY
   );
+  const [search, setSearch] = useState<string>("");
 
   const handleGoToCreateAd = () => {
     navigate(Screens.CREATED_AD);
   };
+  const searchDebounce = useDebounce(search, 500);
 
   const getAds = async () => {
     try {
       setLoading(loadingStatesEnum.PENDING);
-      const response = await productService.getProducts();
+      const response = await productService.getProducts({
+        query: searchDebounce,
+      });
       setAds(response);
       await getMyAds();
       setLoading(loadingStatesEnum.DONE);
@@ -64,9 +69,13 @@ export const Home = () => {
     navigate(Screens.MY_ADS);
   };
 
+  const handleSearch = async (search: string) => {
+    setSearch(search);
+  };
+
   useEffect(() => {
     getAds();
-  }, []);
+  }, [searchDebounce]);
   return (
     <HomeLayout
       handleNavigateToMyAds={handleNavigateToMyAds}
@@ -75,6 +84,8 @@ export const Home = () => {
       ads={ads}
       loading={loading == loadingStatesEnum.PENDING}
       myAdsCount={myAdsCount}
+      handleSearch={handleSearch}
+      search={search}
     />
   );
 };

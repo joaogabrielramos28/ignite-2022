@@ -26,8 +26,10 @@ type Props = {
   ads: IProduct[];
   loading: boolean;
   myAdsCount: number;
+  search: string;
   handleGoToCreateAd: () => void;
   handleNavigateToMyAds: () => void;
+  handleSearch: (search: string) => void;
 };
 
 export const HomeLayout = ({
@@ -37,6 +39,8 @@ export const HomeLayout = ({
   loading,
   myAdsCount,
   handleNavigateToMyAds,
+  handleSearch,
+  search,
 }: Props) => {
   const { colors } = useTheme();
 
@@ -102,7 +106,7 @@ export const HomeLayout = ({
             Compre produtos variados
           </Text>
 
-          <SearchInput />
+          <SearchInput onChange={handleSearch} value={search} />
         </VStack>
         {loading ? (
           <Loading />

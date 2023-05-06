@@ -1,14 +1,21 @@
 import { Input } from "@components/Input";
-import { Box, Divider, HStack, useTheme } from "native-base";
+import { Box, HStack, useTheme } from "native-base";
 import { MagnifyingGlass, Sliders } from "phosphor-react-native";
 import React from "react";
 
-export const SearchInput = () => {
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export const SearchInput = ({ onChange, value }: Props) => {
   const { colors } = useTheme();
   return (
     <Input
       mt={4}
       padding={4}
+      onChangeText={onChange}
+      value={value}
       placeholder="Buscar anúncio"
       InputRightElement={
         <HStack marginRight={4}>
