@@ -6,6 +6,7 @@ import {
   FlatList,
   HStack,
   Heading,
+  Skeleton,
   Text,
   VStack,
   useTheme,
@@ -22,11 +23,21 @@ import { IProduct } from "@model/Product";
 
 type Props = {
   user: IUser | null;
-  handleGoToCreateAd: () => void;
   ads: IProduct[];
+  loading: boolean;
+  myAdsCount: number;
+  handleGoToCreateAd: () => void;
+  handleNavigateToMyAds: () => void;
 };
 
-export const HomeLayout = ({ user, handleGoToCreateAd, ads }: Props) => {
+export const HomeLayout = ({
+  user,
+  handleGoToCreateAd,
+  ads,
+  loading,
+  myAdsCount,
+  handleNavigateToMyAds,
+}: Props) => {
   const { colors } = useTheme();
 
   if (!user) {
@@ -75,7 +86,16 @@ export const HomeLayout = ({ user, handleGoToCreateAd, ads }: Props) => {
           Seus produtos anunciados para venda
         </Text>
 
-        <MyAdsCard count={4} onPress={() => {}} />
+        {loading ? (
+          <Skeleton
+            startColor="gray.400"
+            endColor="gray.700"
+            height={16}
+            borderRadius={"6px"}
+          />
+        ) : (
+          <MyAdsCard count={myAdsCount} onPress={handleNavigateToMyAds} />
+        )}
 
         <VStack mt={8}>
           <Text fontSize={"sm"} color={"gray.300"}>
@@ -84,19 +104,23 @@ export const HomeLayout = ({ user, handleGoToCreateAd, ads }: Props) => {
 
           <SearchInput />
         </VStack>
-        <FlatList
-          contentContainerStyle={{
-            paddingBottom: 32,
-            flexGrow: 1,
-          }}
-          numColumns={2}
-          columnWrapperStyle={{
-            gap: 16,
-          }}
-          marginTop={4}
-          data={ads}
-          renderItem={_renderItem}
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            contentContainerStyle={{
+              paddingBottom: 32,
+              flexGrow: 1,
+            }}
+            numColumns={2}
+            columnWrapperStyle={{
+              gap: 16,
+            }}
+            marginTop={4}
+            data={ads}
+            renderItem={_renderItem}
+          />
+        )}
       </VStack>
     </VStack>
   );

@@ -39,6 +39,7 @@ type AppRoutes = {
   [Screens.CREATED_AD]: undefined;
   [Screens.PREVIEW_AD]: PreviewAdParams;
   [Screens.AD]: AdParams;
+  [Screens.MY_ADS]: undefined;
 };
 
 export type AppNavigatorRoutesProps = StackNavigationProp<AppRoutes>;
@@ -86,6 +87,7 @@ export const TabRoutes = () => {
           tabBarIcon: ({ color }) => (
             <House size={24} weight="bold" color={color} />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen

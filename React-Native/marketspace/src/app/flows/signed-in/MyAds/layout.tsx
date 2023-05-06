@@ -87,6 +87,8 @@ export const MyAdsLayout = ({ loading, myAds }: MyAdsLayoutProps) => {
           selectedValue="all"
         >
           <Select.Item label="Todos" value="all" />
+          <Select.Item label="Ativos" value="active" />
+          <Select.Item label="Inativos" value="inactive" />
         </Select>
       </HStack>
 
