@@ -35,9 +35,35 @@ export const FilterSheet = ({
     color: "gray.700",
   };
 
-  const handleApplyFilter = () => {
-    console.log("filterState", filterState);
+  const [draftState, setDraftState] =
+    React.useState<FilterStateType>(filterState);
+
+  const handleChangeDraftFilter = (filter: Partial<FilterStateType>) => {
+    setDraftState((prev) => ({
+      ...prev,
+      ...filter,
+    }));
   };
+
+  const handleApplyFilter = () => {
+    handleChangeFilter(draftState);
+    onClose();
+  };
+
+  const handleResetFilter = () => {
+    handleChangeFilter({
+      acceptExchange: false,
+      paymentMethods: [],
+      condition: undefined,
+    } as FilterStateType);
+    handleChangeDraftFilter({
+      acceptExchange: false,
+      paymentMethods: [],
+      condition: undefined,
+    });
+    onClose();
+  };
+
   return (
     <Actionsheet isOpen={isOpen} onClose={onClose}>
       <Actionsheet.Content padding={6}>
@@ -61,7 +87,7 @@ export const FilterSheet = ({
           <HStack space={2} mt={3}>
             <Pressable
               onPress={() =>
-                handleChangeFilter({
+                handleChangeDraftFilter({
                   condition: "new",
                 })
               }
@@ -70,23 +96,23 @@ export const FilterSheet = ({
                 w={16}
                 padding={1}
                 bgColor={
-                  filterState.condition === "new"
+                  draftState.condition === "new"
                     ? badgeSelected.bgColor
                     : "gray.500"
                 }
                 rounded="full"
                 _text={{
                   color:
-                    filterState.condition === "new"
+                    draftState.condition === "new"
                       ? badgeSelected.color
                       : "gray.300",
                   fontFamily: "heading",
                 }}
                 endIcon={
-                  filterState.condition === "new" ? (
+                  draftState.condition === "new" ? (
                     <IconButton
                       onPress={() =>
-                        handleChangeFilter({
+                        handleChangeDraftFilter({
                           condition: undefined,
                         })
                       }
@@ -108,7 +134,7 @@ export const FilterSheet = ({
             </Pressable>
             <Pressable
               onPress={() =>
-                handleChangeFilter({
+                handleChangeDraftFilter({
                   condition: "used",
                 })
               }
@@ -117,23 +143,23 @@ export const FilterSheet = ({
                 w={16}
                 padding={1}
                 bgColor={
-                  filterState.condition === "used"
+                  draftState.condition === "used"
                     ? badgeSelected.bgColor
                     : "gray.500"
                 }
                 rounded="full"
                 _text={{
                   color:
-                    filterState.condition === "used"
+                    draftState.condition === "used"
                       ? badgeSelected.color
                       : "gray.300",
                   fontFamily: "heading",
                 }}
                 endIcon={
-                  filterState.condition === "used" ? (
+                  draftState.condition === "used" ? (
                     <IconButton
                       onPress={() =>
-                        handleChangeFilter({
+                        handleChangeDraftFilter({
                           condition: undefined,
                         })
                       }
@@ -164,7 +190,7 @@ export const FilterSheet = ({
               colorScheme="blue"
               marginTop={3}
               onValueChange={(value) =>
-                handleChangeFilter({
+                handleChangeDraftFilter({
                   acceptExchange: value,
                 })
               }
@@ -178,7 +204,7 @@ export const FilterSheet = ({
 
             <Checkbox.Group
               onChange={(values) =>
-                handleChangeFilter({
+                handleChangeDraftFilter({
                   paymentMethods: values,
                 })
               }
@@ -205,7 +231,12 @@ export const FilterSheet = ({
         </VStack>
 
         <HStack space={4} mt={16}>
-          <Button title="Resetar filtros" flex={1} variant="light" />
+          <Button
+            title="Resetar filtros"
+            flex={1}
+            variant="light"
+            onPress={handleResetFilter}
+          />
           <Button
             title="Aplicar filtros"
             flex={1}

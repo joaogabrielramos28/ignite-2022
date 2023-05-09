@@ -31,9 +31,11 @@ export const Home = () => {
   const [isOpenFilterActionSheet, setIsOpenFilterActionSheet] =
     useState<boolean>(false);
 
-  const [filterState, setFilterState] = useState<FilterStateType>(
-    {} as FilterStateType
-  );
+  const [filterState, setFilterState] = useState<FilterStateType>({
+    condition: undefined,
+    acceptExchange: false,
+    paymentMethods: [],
+  } as FilterStateType);
 
   const handleChangeFilter = (filter: Partial<FilterStateType>) => {
     setFilterState((prev) => {
@@ -41,6 +43,19 @@ export const Home = () => {
         ...prev,
         ...filter,
       };
+    });
+    getAds({
+      accept_trade: filter.acceptExchange
+        ? filter.acceptExchange
+          ? "true"
+          : "false"
+        : undefined,
+      is_new: filter.condition
+        ? filter.condition === "new"
+          ? "true"
+          : "false"
+        : undefined,
+      payment_method: filter.paymentMethods ? filter.paymentMethods : undefined,
     });
   };
 
@@ -105,10 +120,6 @@ export const Home = () => {
   const handleSearch = async (search: string) => {
     setSearch(search);
   };
-
-  const applyFilter = () => {};
-
-  const handleOpenFilterActionSheet = () => {};
 
   useEffect(() => {
     getAds({});

@@ -3,6 +3,7 @@ import { Button } from "@components/Button";
 import {
   Avatar,
   Box,
+  Center,
   FlatList,
   HStack,
   Heading,
@@ -137,6 +138,13 @@ export const HomeLayout = ({
             marginTop={4}
             data={ads}
             renderItem={_renderItem}
+            ListEmptyComponent={() => (
+              <Center>
+                <Heading color="gray.100" fontSize="lg" fontFamily="body">
+                  Nenhum produto encontrado
+                </Heading>
+              </Center>
+            )}
           />
         )}
       </VStack>

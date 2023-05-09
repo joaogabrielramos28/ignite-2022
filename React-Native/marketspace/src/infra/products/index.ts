@@ -19,7 +19,7 @@ export class ProductService {
   public async getProducts(params: GetProductRequestDTO) {
     try {
       const response = await api.get(this.routes.getProducts, {
-        params: { query: params.query },
+        params: params,
       });
 
       return response.data;
