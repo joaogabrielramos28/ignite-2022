@@ -38,4 +38,14 @@ export class AuthService {
       throw error;
     }
   }
+
+  public async refreshToken(refreshToken: string): Promise<{ token: string }> {
+    try {
+      const response = await api.post("/refresh-token", { refreshToken });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
