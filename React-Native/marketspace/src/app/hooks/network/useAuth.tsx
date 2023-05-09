@@ -48,9 +48,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
       setUser(data.user);
       updateUserToStorage(data.user);
+
       updateTokenToStorage({
         token: data.token,
-        refresh_token: data["refresh-token"],
+        refresh_token: data["refresh_token"],
       });
     } catch (error) {
       throw error;

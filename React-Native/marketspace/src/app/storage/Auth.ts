@@ -24,6 +24,8 @@ export const updateTokenToStorage = async ({
   refresh_token,
   token,
 }: StorageAuthTokenProps) => {
+  console.log("updateTokenToStorage", { refresh_token, token });
+
   await AsyncStorage.setItem(
     StorageKeys.AUTH_TOKEN_STORAGE,
     JSON.stringify({ refresh_token, token })
