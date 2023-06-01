@@ -2,6 +2,7 @@
   "expo": {
     "name": "ignitefleet",
     "slug": "ignitefleet",
+    "scheme": "ignitefleet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,13 +14,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.joaogabrielramos28.ignitefleet"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#202024"
-      }
+      },
+      "package": "com.joaogabrielramos28.ignitefleet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
