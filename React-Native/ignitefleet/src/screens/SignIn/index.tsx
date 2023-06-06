@@ -30,13 +30,10 @@ export function SignIn() {
   useEffect(() => {
     if (response?.type === "success") {
       if (response.authentication?.idToken) {
-        setIsAuthenticating(false);
-      } else {
-        Alert.alert(
-          "Entrar",
-          "Não foi possível conectar-se a sua conta google."
+        console.log(
+          "TOKEN DE AUTENTICAÇÃO =>",
+          response.authentication.idToken
         );
-        setIsAuthenticating(false);
       }
     }
   }, [response]);
