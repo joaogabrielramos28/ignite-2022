@@ -1,6 +1,6 @@
-const theme = {
+export const theme = {
   colors: {
-    "yellow-dark": "#C47F17",
+    yellow_dark: "#C47F17",
     yellow: "#DBAC2C",
 
     "purple-dark": "#4B2995",
@@ -42,5 +42,3 @@ const theme = {
     xxl: "36px",
   },
 } as const;
-
-export { theme };
