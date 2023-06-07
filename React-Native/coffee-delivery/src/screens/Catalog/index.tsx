@@ -1,7 +1,13 @@
 import React from "react";
 import {
+  CategoryBadge,
+  CategoryBadgeText,
+  CategorySection,
+  CoffeeListSection,
   CoffeeSection,
   Container,
+  OurCoffeesSection,
+  OurCoffeesTitle,
   SearchInput,
   SearchInputContainer,
   SearchSection,
@@ -10,9 +16,10 @@ import {
 import { useTheme } from "styled-components/native";
 import { Header } from "./components/Header";
 import { MagnifyingGlass } from "phosphor-react-native";
-import { Image, Text } from "react-native";
+import { FlatList, Image, Text } from "react-native";
 
 import CoffeeImage from "../../assets/coffee.png";
+import { CoffeeCardCarousel } from "./components/CoffeeCardCarousel";
 
 export function Catalog() {
   const { colors } = useTheme();
@@ -32,6 +39,35 @@ export function Catalog() {
           <Image source={CoffeeImage} />
         </CoffeeSection>
       </SearchSection>
+      <CoffeeListSection>
+        <FlatList
+          style={{ overflow: "visible" }}
+          contentContainerStyle={{
+            gap: 32,
+          }}
+          data={[1, 2]}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => String(item)}
+          renderItem={({ item }) => <CoffeeCardCarousel key={item} />}
+        />
+      </CoffeeListSection>
+
+      <OurCoffeesSection>
+        <OurCoffeesTitle>Nossos cafés</OurCoffeesTitle>
+
+        <CategorySection>
+          <CategoryBadge>
+            <CategoryBadgeText>Tradicionais</CategoryBadgeText>
+          </CategoryBadge>
+          <CategoryBadge>
+            <CategoryBadgeText>doces</CategoryBadgeText>
+          </CategoryBadge>
+          <CategoryBadge>
+            <CategoryBadgeText>especiais</CategoryBadgeText>
+          </CategoryBadge>
+        </CategorySection>
+      </OurCoffeesSection>
     </Container>
   );
 }
