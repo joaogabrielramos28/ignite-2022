@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
 `;
 
@@ -75,4 +75,10 @@ export const CategoryBadgeText = styled.Text`
   font-family: ${({ theme }) => theme.font_family.robotoBold};
   font-size: ${({ theme }) => theme.font_size.tag};
   text-transform: uppercase;
+`;
+
+export const SectionTitle = styled.Text`
+  color: ${({ theme }) => theme.colors["gray-400"]};
+  font-family: ${({ theme }) => theme.font_family.balloBold};
+  font-size: ${({ theme }) => theme.font_size.sm};
 `;

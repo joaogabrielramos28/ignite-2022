@@ -11,15 +11,19 @@ import {
   SearchInput,
   SearchInputContainer,
   SearchSection,
+  SectionTitle,
   Title,
 } from "./styles";
 import { useTheme } from "styled-components/native";
 import { Header } from "./components/Header";
 import { MagnifyingGlass } from "phosphor-react-native";
-import { FlatList, Image, Text } from "react-native";
+import { FlatList, Image, SectionList } from "react-native";
 
 import CoffeeImage from "../../assets/coffee.png";
 import { CoffeeCardCarousel } from "./components/CoffeeCardCarousel";
+import { CoffeeCardList } from "./components/CoffeeCardList";
+
+import { data } from "../../data";
 
 export function Catalog() {
   const { colors } = useTheme();
@@ -67,6 +71,21 @@ export function Catalog() {
             <CategoryBadgeText>especiais</CategoryBadgeText>
           </CategoryBadge>
         </CategorySection>
+        <SectionList
+          sections={data}
+          keyExtractor={(item) => item.id}
+          style={{
+            marginTop: 32,
+            overflow: "visible",
+          }}
+          contentContainerStyle={{
+            gap: 32,
+          }}
+          renderSectionHeader={({ section: { title } }) => (
+            <SectionTitle>{title}</SectionTitle>
+          )}
+          renderItem={({ item }) => <CoffeeCardList {...item} />}
+        />
       </OurCoffeesSection>
     </Container>
   );
