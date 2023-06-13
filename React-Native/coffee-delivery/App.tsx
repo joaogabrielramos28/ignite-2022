@@ -1,4 +1,4 @@
-import { Catalog } from "./src/screens/Catalog";
+import "react-native-gesture-handler";
 import { theme } from "./src/theme";
 
 import { useFonts } from "expo-font";
@@ -7,9 +7,9 @@ import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { Baloo2_400Regular, Baloo2_700Bold } from "@expo-google-fonts/baloo-2";
 import { Loading } from "./src/components/Loading";
 import { ThemeProvider } from "styled-components";
-import { Coffee } from "./src/screens/Coffee";
-import { Cart } from "./src/screens/Cart";
+
 import { Finish } from "./src/screens/Finish";
+import { Routes } from "./src/routes";
 
 export default function App() {
   const [fontLoaded] = useFonts({
@@ -24,7 +24,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Finish />
+      <Routes />
     </ThemeProvider>
   );
 }
