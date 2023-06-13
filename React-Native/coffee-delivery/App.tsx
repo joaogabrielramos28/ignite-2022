@@ -7,6 +7,7 @@ import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { Baloo2_400Regular, Baloo2_700Bold } from "@expo-google-fonts/baloo-2";
 import { Loading } from "./src/components/Loading";
 import { ThemeProvider } from "styled-components";
+import { Coffee } from "./src/screens/Coffee";
 
 export default function App() {
   const [fontLoaded] = useFonts({
@@ -21,7 +22,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Catalog />
+      <Coffee />
     </ThemeProvider>
   );
 }
