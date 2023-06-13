@@ -9,6 +9,7 @@ import { Loading } from "./src/components/Loading";
 import { ThemeProvider } from "styled-components";
 import { Coffee } from "./src/screens/Coffee";
 import { Cart } from "./src/screens/Cart";
+import { Finish } from "./src/screens/Finish";
 
 export default function App() {
   const [fontLoaded] = useFonts({
@@ -23,7 +24,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Cart />
+      <Finish />
     </ThemeProvider>
   );
 }
