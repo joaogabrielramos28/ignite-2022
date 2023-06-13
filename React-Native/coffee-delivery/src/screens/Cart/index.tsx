@@ -10,7 +10,7 @@ import {
   TotalPrice,
   TotalText,
 } from "./styles";
-import { FlatList, TouchableOpacity } from "react-native";
+import { FlatList, Text, TouchableOpacity } from "react-native";
 import { ArrowLeft } from "phosphor-react-native";
 import { useTheme } from "styled-components";
 import { CoffeeCartItem } from "./components/CoffeeCartItem";
@@ -20,7 +20,11 @@ export function Cart() {
   return (
     <Container>
       <Header>
-        <TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+          }}
+        >
           <ArrowLeft color={colors["gray-100"]} weight="bold" size={24} />
         </TouchableOpacity>
 

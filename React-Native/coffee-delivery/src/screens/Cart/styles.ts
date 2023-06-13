@@ -20,8 +20,8 @@ export const HeaderTitle = styled.Text`
   color: ${({ theme }) => theme.colors["gray-200"]};
   font-family: ${({ theme }) => theme.font_family.balloBold};
   font-size: ${({ theme }) => theme.font_size.md};
+  width: 100%;
   text-align: center;
-  flex-grow: 1;
 `;
 
 export const Footer = styled.View`
