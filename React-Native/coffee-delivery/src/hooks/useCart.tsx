@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { CarouselItem } from "../data/types";
 
 type ActionCoffeeQuantity = "increment" | "decrement";
 
@@ -19,7 +18,7 @@ type CartState = {
 
 type CartContextData = {
   cart: CartState;
-  removeItemFromCart: (id: string, size: number) => void;
+
   addItemToCart: (item: ItemCart) => void;
   deleteItemFromCart: (id: string, size: number) => void;
   changeProductQuantityInCart: (
@@ -86,7 +85,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     if (type === "decrement" && findItem?.quantity === 1) {
-      return removeItemFromCart(id, size);
+      return deleteItemFromCart(id, size);
     }
 
     const newProducts = cart.products.map((product) => {
@@ -109,46 +108,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           : cart.priceTotal - findItem?.price!,
       products: newProducts,
     });
-  };
-
-  const removeItemFromCart = (id: string, size: number) => {
-    const findItem = cart.products.find(
-      (product) => product.id === id && product.size === size
-    );
-
-    if (findItem?.quantity === 1) {
-      const newProducts = cart.products.filter((product) => {
-        if (product.id === id) {
-          if (product.size === size) {
-            return false;
-          }
-        }
-        return true;
-      });
-
-      setCart({
-        count: cart.count - 1,
-        priceTotal: cart.priceTotal - findItem.price,
-        products: newProducts,
-      });
-    } else {
-      const newProducts = cart.products.map((product) => {
-        if (product.id === id) {
-          return {
-            ...product,
-            quantity: product.quantity - 1,
-          };
-        }
-
-        return product;
-      });
-
-      setCart({
-        count: cart.count,
-        priceTotal: cart.priceTotal - findItem?.price!,
-        products: newProducts,
-      });
-    }
   };
 
   const deleteItemFromCart = (id: string, size: number) => {
@@ -180,7 +139,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         cart,
         addItemToCart,
-        removeItemFromCart,
         deleteItemFromCart,
         changeProductQuantityInCart,
       }}

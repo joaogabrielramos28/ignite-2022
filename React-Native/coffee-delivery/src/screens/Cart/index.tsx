@@ -20,13 +20,7 @@ import { useCart } from "../../hooks/useCart";
 export function Cart() {
   const { colors } = useTheme();
   const { goBack } = useNavigation();
-  const {
-    cart,
-    addItemToCart,
-    removeItemFromCart,
-    deleteItemFromCart,
-    changeProductQuantityInCart,
-  } = useCart();
+  const { cart, deleteItemFromCart, changeProductQuantityInCart } = useCart();
 
   return (
     <Container>
