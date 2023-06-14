@@ -20,8 +20,13 @@ import { useCart } from "../../hooks/useCart";
 export function Cart() {
   const { colors } = useTheme();
   const { goBack } = useNavigation();
-  const { cart, addItemToCart, removeItemFromCart, deleteItemFromCart } =
-    useCart();
+  const {
+    cart,
+    addItemToCart,
+    removeItemFromCart,
+    deleteItemFromCart,
+    changeProductQuantityInCart,
+  } = useCart();
 
   return (
     <Container>
@@ -37,14 +42,18 @@ export function Cart() {
         data={cart.products}
         renderItem={({ item }) => (
           <CoffeeCartItem
-            onAddQuantity={() => addItemToCart(item)}
-            onRemoveQuantity={() => removeItemFromCart(item.id)}
-            onDelete={() => deleteItemFromCart(item.id)}
-            key={item.id}
+            onAddQuantity={() =>
+              changeProductQuantityInCart(item.id, item.size, "increment")
+            }
+            onRemoveQuantity={() =>
+              changeProductQuantityInCart(item.id, item.size, "decrement")
+            }
+            onDelete={() => deleteItemFromCart(item.id, item.size)}
+            key={`${item.id}-${item.size}`}
             item={item}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => `${item.id}-${item.size}`}
       />
 
       <Footer>

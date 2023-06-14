@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { CarouselItem } from "../data/types";
 
+type ActionCoffeeQuantity = "increment" | "decrement";
+
 export type ItemCart = {
   id: string;
   name: string;
@@ -17,9 +19,14 @@ type CartState = {
 
 type CartContextData = {
   cart: CartState;
-  removeItemFromCart: (id: string) => void;
+  removeItemFromCart: (id: string, size: number) => void;
   addItemToCart: (item: ItemCart) => void;
-  deleteItemFromCart: (id: string) => void;
+  deleteItemFromCart: (id: string, size: number) => void;
+  changeProductQuantityInCart: (
+    id: string,
+    size: number,
+    type: ActionCoffeeQuantity
+  ) => void;
 };
 
 const CartContext = createContext({} as CartContextData);
@@ -33,15 +40,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addItemToCart = (item: ItemCart) => {
     const alreadyHasItem = cart.products.find(
-      (product) => product.id === item.id
+      (product) => product.id === item.id && product.size === item.size
     );
 
     if (alreadyHasItem) {
       const newCartState = cart.products.map((product) => {
-        if (product.id === item.id) {
+        if (product.id === item.id && product.size === item.size) {
           return {
             ...product,
-            quantity: product.quantity + 1,
+            quantity: product.quantity + item.quantity,
           };
         }
         return product;
@@ -69,11 +76,55 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const removeItemFromCart = (id: string) => {
-    const findItem = cart.products.find((product) => product.id === id);
+  const changeProductQuantityInCart = (
+    id: string,
+    size: number,
+    type: ActionCoffeeQuantity
+  ) => {
+    const findItem = cart.products.find(
+      (product) => product.id === id && product.size === size
+    );
+
+    if (type === "decrement" && findItem?.quantity === 1) {
+      return removeItemFromCart(id, size);
+    }
+
+    const newProducts = cart.products.map((product) => {
+      if (product.id === id && product.size === size) {
+        return {
+          ...product,
+          quantity:
+            type === "increment" ? product.quantity + 1 : product.quantity - 1,
+        };
+      }
+
+      return product;
+    });
+
+    setCart({
+      count: cart.count,
+      priceTotal:
+        type === "increment"
+          ? cart.priceTotal + findItem?.price!
+          : cart.priceTotal - findItem?.price!,
+      products: newProducts,
+    });
+  };
+
+  const removeItemFromCart = (id: string, size: number) => {
+    const findItem = cart.products.find(
+      (product) => product.id === id && product.size === size
+    );
 
     if (findItem?.quantity === 1) {
-      const newProducts = cart.products.filter((product) => product.id !== id);
+      const newProducts = cart.products.filter((product) => {
+        if (product.id === id) {
+          if (product.size === size) {
+            return false;
+          }
+        }
+        return true;
+      });
 
       setCart({
         count: cart.count - 1,
@@ -100,9 +151,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const deleteItemFromCart = (id: string) => {
-    const item = cart.products.find((product) => product.id === id);
-    const newProducts = cart.products.filter((product) => product.id !== id);
+  const deleteItemFromCart = (id: string, size: number) => {
+    const item = cart.products.find(
+      (product) => product.id === id && product.size === size
+    );
+    const newProducts = cart.products.filter((product) => {
+      if (product.id === id) {
+        if (product.size === size) {
+          return false;
+        }
+      }
+      return true;
+    });
 
     setCart({
       count: cart.count - 1,
@@ -122,6 +182,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         addItemToCart,
         removeItemFromCart,
         deleteItemFromCart,
+        changeProductQuantityInCart,
       }}
     >
       {children}

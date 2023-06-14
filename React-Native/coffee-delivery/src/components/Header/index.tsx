@@ -47,7 +47,7 @@ export function Header({ hasLocation, backAction }: HeaderProps) {
       >
         {cart.count > 0 ? (
           <BadgeCart>
-            <BadgeCartCount>1</BadgeCartCount>
+            <BadgeCartCount>{cart.count}</BadgeCartCount>
           </BadgeCart>
         ) : null}
 
