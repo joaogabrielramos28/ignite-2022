@@ -7,6 +7,7 @@ export const Container = styled.View`
   border-color: ${({ theme }) => theme.colors["gray-700"]};
   flex-direction: row;
   align-items: center;
+  gap: 32px;
 `;
 
 export const ImageContainer = styled.View`

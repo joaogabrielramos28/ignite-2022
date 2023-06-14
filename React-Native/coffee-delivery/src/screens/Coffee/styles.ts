@@ -1,6 +1,10 @@
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
+type SizeProps = {
+  selected: boolean;
+};
+
 const CENTER_WIDTH = Dimensions.get("screen").width / 2 - 50;
 export const Container = styled.View`
   flex: 1;
@@ -114,17 +118,23 @@ export const FooterRow = styled.View`
   margin-top: 16px;
 `;
 
-export const FooterSize = styled.TouchableOpacity`
-  border-radius: 6px;
-  background-color: ${({ theme }) => theme.colors["gray-700"]};
+export const FooterSize = styled.TouchableOpacity<SizeProps>`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
   padding: 12px 0;
+  border-width: ${({ selected }) => (selected ? 1 : 0)}px;
+  border-radius: 6px;
+
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors["white"] : theme.colors["gray-700"]};
+  border-color: ${({ theme, selected }) =>
+    selected ? theme.colors["purple"] : theme.colors["gray-300"]};
 `;
 
-export const FooterSizeText = styled.Text`
-  color: ${({ theme }) => theme.colors["gray-300"]};
+export const FooterSizeText = styled.Text<SizeProps>`
+  color: ${({ theme, selected }) =>
+    selected ? theme.colors["purple"] : theme.colors["gray-300"]};
   font-family: ${({ theme }) => theme.font_family.robotoRegular};
   font-size: ${({ theme }) => theme.font_size.sm};
 `;

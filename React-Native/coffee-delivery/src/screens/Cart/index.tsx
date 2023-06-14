@@ -14,17 +14,19 @@ import { FlatList, Text, TouchableOpacity } from "react-native";
 import { ArrowLeft } from "phosphor-react-native";
 import { useTheme } from "styled-components";
 import { CoffeeCartItem } from "./components/CoffeeCartItem";
+import { useNavigation } from "@react-navigation/native";
+import { useCart } from "../../hooks/useCart";
 
 export function Cart() {
   const { colors } = useTheme();
+  const { goBack } = useNavigation();
+  const { cart, addItemToCart, removeItemFromCart, deleteItemFromCart } =
+    useCart();
+
   return (
     <Container>
       <Header>
-        <TouchableOpacity
-          style={{
-            flex: 1,
-          }}
-        >
+        <TouchableOpacity onPress={goBack}>
           <ArrowLeft color={colors["gray-100"]} weight="bold" size={24} />
         </TouchableOpacity>
 
@@ -32,15 +34,23 @@ export function Cart() {
       </Header>
 
       <FlatList
-        data={[0, 1, 2]}
-        renderItem={({ item }) => <CoffeeCartItem />}
-        keyExtractor={(item) => String(item)}
+        data={cart.products}
+        renderItem={({ item }) => (
+          <CoffeeCartItem
+            onAddQuantity={() => addItemToCart(item)}
+            onRemoveQuantity={() => removeItemFromCart(item.id)}
+            onDelete={() => deleteItemFromCart(item.id)}
+            key={item.id}
+            item={item}
+          />
+        )}
+        keyExtractor={(item) => item.id}
       />
 
       <Footer>
         <TotalContainer>
           <TotalText>Valor total</TotalText>
-          <TotalPrice>R$ 9,90</TotalPrice>
+          <TotalPrice>R$ {cart.priceTotal.toFixed(2)}</TotalPrice>
         </TotalContainer>
         <ConfirmButton>
           <ConfirmButtonText>Confirmar pedido</ConfirmButtonText>

@@ -1,8 +1,17 @@
 import React from "react";
-import { Container, LocationContainer, LocationText } from "./styles";
+import {
+  BadgeCart,
+  BadgeCartCount,
+  Container,
+  LocationContainer,
+  LocationText,
+} from "./styles";
 import { ArrowLeft, MapPin, ShoppingCart } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
 import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RoutesEnum } from "../../routes/routes";
+import { useCart } from "../../hooks/useCart";
 
 type HeaderProps = {
   hasLocation?: boolean;
@@ -12,6 +21,12 @@ type HeaderProps = {
 
 export function Header({ hasLocation, backAction }: HeaderProps) {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
+  const { cart } = useCart();
+
+  const goToCart = () => {
+    navigate(RoutesEnum.CART);
+  };
   return (
     <Container>
       {hasLocation ? (
@@ -24,8 +39,24 @@ export function Header({ hasLocation, backAction }: HeaderProps) {
           <ArrowLeft size={24} color={colors.white} />
         </TouchableOpacity>
       )}
+      <TouchableOpacity
+        onPress={goToCart}
+        style={{
+          position: "relative",
+        }}
+      >
+        {cart.count > 0 ? (
+          <BadgeCart>
+            <BadgeCartCount>1</BadgeCartCount>
+          </BadgeCart>
+        ) : null}
 
-      <ShoppingCart weight="fill" color={colors.yellow_dark} size={20} />
+        <ShoppingCart
+          weight="fill"
+          color={cart.count > 0 ? colors.purple : colors.yellow_dark}
+          size={20}
+        />
+      </TouchableOpacity>
     </Container>
   );
 }

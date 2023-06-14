@@ -10,6 +10,7 @@ import { ThemeProvider } from "styled-components";
 
 import { Finish } from "./src/screens/Finish";
 import { Routes } from "./src/routes";
+import { CartProvider } from "./src/hooks/useCart";
 
 export default function App() {
   const [fontLoaded] = useFonts({
@@ -24,7 +25,9 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
+      <CartProvider>
+        <Routes />
+      </CartProvider>
     </ThemeProvider>
   );
 }

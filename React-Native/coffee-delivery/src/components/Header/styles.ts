@@ -19,3 +19,23 @@ export const LocationText = styled.Text`
   font-family: ${({ theme }) => theme.font_family.robotoRegular};
   font-size: ${({ theme }) => theme.font_size.sm};
 `;
+
+export const BadgeCart = styled.View`
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors["purple"]};
+  align-items: center;
+  justify-content: center;
+
+  top: -16px;
+  left: 16px;
+`;
+
+export const BadgeCartCount = styled.Text`
+  color: ${({ theme }) => theme.colors["white"]};
+  font-family: ${({ theme }) => theme.font_family.robotoRegular};
+  font-size: ${({ theme }) => theme.font_size.xs};
+  text-align: center;
+`;
