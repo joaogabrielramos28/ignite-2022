@@ -26,13 +26,13 @@ import {
   AddButton,
   AddButtonText,
 } from "./styles";
-import { Header } from "./components/header";
 
 import CoffeeImage from "../../assets/coffee-product.png";
 import Smoke from "../../assets/smoke.png";
 import { TouchableOpacity } from "react-native";
 import { Minus, Plus } from "phosphor-react-native";
 import { useTheme } from "styled-components";
+import { Header } from "../../components/Header";
 
 export function Coffee() {
   const { colors } = useTheme();

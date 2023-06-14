@@ -15,7 +15,6 @@ import {
   Title,
 } from "./styles";
 import { useTheme } from "styled-components/native";
-import { Header } from "./components/Header";
 import { MagnifyingGlass } from "phosphor-react-native";
 import { FlatList, Image, SectionList } from "react-native";
 
@@ -24,13 +23,14 @@ import { CoffeeCardCarousel } from "./components/CoffeeCardCarousel";
 import { CoffeeCardList } from "./components/CoffeeCardList";
 
 import { data } from "../../data";
+import { Header } from "../../components/Header";
 
 export function Catalog() {
   const { colors } = useTheme();
   return (
     <Container>
       <SearchSection>
-        <Header />
+        <Header hasLocation />
         <Title>Encontre o café perfeito para qualquer hora do dia</Title>
         <SearchInputContainer>
           <MagnifyingGlass color={colors["gray-400"]} size={16} />
