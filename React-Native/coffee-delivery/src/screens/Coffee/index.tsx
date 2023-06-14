@@ -33,30 +33,37 @@ import { TouchableOpacity } from "react-native";
 import { Minus, Plus } from "phosphor-react-native";
 import { useTheme } from "styled-components";
 import { Header } from "../../components/Header";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { CoffeeParams } from "../../@types/navigate";
+import { carouselData } from "../../data/carousel";
 
 export function Coffee() {
   const { colors } = useTheme();
+  const routes = useRoute();
+  const { goBack } = useNavigation();
+  const { id } = routes.params as CoffeeParams;
+
+  const selectedCoffee = carouselData.find((coffee) => coffee.id === id);
+
   return (
     <Container>
       <Main>
         <Content>
-          <Header />
+          <Header backAction={goBack} />
           <ProductSection>
             <TagContainer>
-              <TagText>Especial</TagText>
+              <TagText>{selectedCoffee?.type}</TagText>
             </TagContainer>
 
             <ProductRow>
-              <ProductName>Irlandês</ProductName>
+              <ProductName>{selectedCoffee?.name}</ProductName>
               <PriceContainer>
                 <Symbol>R$</Symbol>
-                <Price>9,90</Price>
+                <Price>{selectedCoffee?.price}</Price>
               </PriceContainer>
             </ProductRow>
 
-            <Description>
-              Bebida a base de café, uísque irlandês, açúcar e chantilly
-            </Description>
+            <Description>{selectedCoffee?.description}</Description>
 
             <ImageContainer>
               <Image source={CoffeeImage} />

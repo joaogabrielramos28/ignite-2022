@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled.Pressable`
   background-color: ${({ theme }) => theme.colors["gray-800"]};
   padding: 16px;
   width: 200px;

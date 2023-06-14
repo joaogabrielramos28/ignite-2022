@@ -24,9 +24,19 @@ import { CoffeeCardList } from "./components/CoffeeCardList";
 
 import { data } from "../../data";
 import { Header } from "../../components/Header";
+import { useNavigation } from "@react-navigation/native";
+import { RoutesEnum } from "../../routes/routes";
+import { carouselData } from "../../data/carousel";
 
 export function Catalog() {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
+
+  const goToCoffeeDetails = (id: string) => {
+    navigate(RoutesEnum.COFFEE, {
+      id,
+    });
+  };
   return (
     <Container>
       <SearchSection>
@@ -49,11 +59,17 @@ export function Catalog() {
           contentContainerStyle={{
             gap: 32,
           }}
-          data={[1, 2]}
+          data={carouselData}
           horizontal
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => String(item)}
-          renderItem={({ item }) => <CoffeeCardCarousel key={item} />}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <CoffeeCardCarousel
+              goToDetails={() => goToCoffeeDetails(item.id)}
+              item={item}
+              key={item.id}
+            />
+          )}
         />
       </CoffeeListSection>
 

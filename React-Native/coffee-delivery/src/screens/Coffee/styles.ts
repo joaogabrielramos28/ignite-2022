@@ -24,7 +24,8 @@ export const ProductSection = styled.View`
 
 export const TagContainer = styled.View`
   padding: 6px 12px;
-  width: 70px;
+  max-width: 100px;
+
   background-color: ${({ theme }) => theme.colors["gray-200"]};
   border-radius: 100%;
 `;

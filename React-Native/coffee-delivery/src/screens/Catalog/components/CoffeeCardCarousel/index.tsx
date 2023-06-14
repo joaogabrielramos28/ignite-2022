@@ -13,25 +13,32 @@ import {
 } from "./styles";
 
 import Americano from "../../../../assets/americano.png";
+import { CarouselItem } from "../../../../data/types";
 
-export function CoffeeCardCarousel() {
+type CoffeeCardCarouselProps = {
+  goToDetails: () => void;
+  item: CarouselItem;
+};
+
+export function CoffeeCardCarousel({
+  item,
+  goToDetails,
+}: CoffeeCardCarouselProps) {
   return (
-    <Container>
-      <CoffeeImage source={Americano} />
+    <Container onPress={goToDetails}>
+      <CoffeeImage source={item.image} />
       <TagContainer>
-        <TagText>Tradicional</TagText>
+        <TagText>{item.type}</TagText>
       </TagContainer>
 
       <InfoCard>
-        <Name>Latte</Name>
-        <Description>
-          Café expresso com o dobro de leite e espuma cremosa
-        </Description>
+        <Name>{item.name}</Name>
+        <Description>{item.description}</Description>
       </InfoCard>
 
       <PriceContainer>
         <Symbol>R$</Symbol>
-        <Price>9,90</Price>
+        <Price>{item.price}</Price>
       </PriceContainer>
     </Container>
   );
