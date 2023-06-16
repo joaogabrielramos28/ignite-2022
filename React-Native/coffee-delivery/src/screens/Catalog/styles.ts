@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.ScrollView`
   flex: 1;
+  background-color: ${({ theme }) => theme.colors["white"]};
 `;
 
 export const SearchSection = styled.View`
@@ -41,7 +42,7 @@ export const CoffeeSection = styled.View`
 `;
 
 export const CoffeeListSection = styled.View`
-  padding: 0 32px;
+  padding: 0 64px;
   transform: translateY(-32px);
 `;
 

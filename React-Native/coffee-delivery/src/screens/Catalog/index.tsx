@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   CategoryBadge,
   CategoryBadgeText,
@@ -21,6 +21,7 @@ import { FlatList, Image, SectionList } from "react-native";
 import CoffeeImage from "../../assets/coffee.png";
 import { CoffeeCardCarousel } from "./components/CoffeeCardCarousel";
 import { CoffeeCardList } from "./components/CoffeeCardList";
+import Animated, { FadeIn, Layout } from "react-native-reanimated";
 
 import { data } from "../../data";
 import { Header } from "../../components/Header";
@@ -31,12 +32,19 @@ import { carouselData } from "../../data/carousel";
 export function Catalog() {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
+  const [growUpItems, setGrowUpItems] = useState(1);
 
   const goToCoffeeDetails = (id: string) => {
     navigate(RoutesEnum.COFFEE, {
       id,
     });
   };
+
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    setGrowUpItems(Number(viewableItems[0].index));
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
   return (
     <Container>
       <SearchSection>
@@ -54,20 +62,25 @@ export function Catalog() {
         </CoffeeSection>
       </SearchSection>
       <CoffeeListSection>
-        <FlatList
+        <Animated.FlatList
           style={{ overflow: "visible" }}
           contentContainerStyle={{
             gap: 32,
           }}
           data={carouselData}
           horizontal
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <CoffeeCardCarousel
               goToDetails={() => goToCoffeeDetails(item.id)}
               item={item}
               key={item.id}
+              index={index}
+              isActive={growUpItems === index}
             />
           )}
         />

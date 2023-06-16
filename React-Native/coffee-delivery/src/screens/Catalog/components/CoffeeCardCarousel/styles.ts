@@ -3,7 +3,8 @@ import styled from "styled-components/native";
 export const Container = styled.Pressable`
   background-color: ${({ theme }) => theme.colors["gray-800"]};
   padding: 16px;
-  width: 200px;
+  width: 210px;
+
   align-items: center;
   border-top-left-radius: 6px;
   border-top-right-radius: 36px;
