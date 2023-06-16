@@ -1,5 +1,9 @@
 import styled from "styled-components/native";
 
+type LocationText = {
+  isLight?: boolean;
+};
+
 export const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -14,8 +18,9 @@ export const LocationContainer = styled.View`
   align-items: center;
 `;
 
-export const LocationText = styled.Text`
-  color: ${({ theme }) => theme.colors["gray-900"]};
+export const LocationText = styled.Text<LocationText>`
+  color: ${({ theme, isLight }) =>
+    isLight ? theme.colors["gray-900"] : theme.colors["gray-100"]};
   font-family: ${({ theme }) => theme.font_family.robotoRegular};
   font-size: ${({ theme }) => theme.font_size.sm};
 `;

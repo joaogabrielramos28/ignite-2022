@@ -17,9 +17,14 @@ type HeaderProps = {
   hasLocation?: boolean;
   cartCount?: number;
   backAction?: () => void;
+  isLight?: boolean;
 };
 
-export function Header({ hasLocation, backAction }: HeaderProps) {
+export function Header({
+  hasLocation,
+  backAction,
+  isLight = true,
+}: HeaderProps) {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
   const { cart } = useCart();
@@ -32,7 +37,7 @@ export function Header({ hasLocation, backAction }: HeaderProps) {
       {hasLocation ? (
         <LocationContainer>
           <MapPin weight="fill" color={colors.purple} size={20} />
-          <LocationText>Porto Alegre, RS</LocationText>
+          <LocationText isLight={isLight}>Porto Alegre, RS</LocationText>
         </LocationContainer>
       ) : (
         <TouchableOpacity onPress={backAction}>

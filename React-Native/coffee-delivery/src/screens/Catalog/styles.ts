@@ -1,9 +1,8 @@
 import styled from "styled-components/native";
 
-export const Container = styled.ScrollView`
-  flex: 1;
-  background-color: ${({ theme }) => theme.colors["white"]};
-`;
+type BadgeProps = {
+  active?: boolean;
+};
 
 export const SearchSection = styled.View`
   height: 342px;
@@ -49,6 +48,7 @@ export const CoffeeListSection = styled.View`
 export const OurCoffeesSection = styled.View`
   margin-top: 36px;
   padding: 0 32px;
+  position: relative;
 `;
 
 export const OurCoffeesTitle = styled.Text`
@@ -63,16 +63,19 @@ export const CategorySection = styled.View`
   margin-top: 12px;
 `;
 
-export const CategoryBadge = styled.View`
+export const CategoryBadge = styled.TouchableOpacity<BadgeProps>`
   border-radius: 100px;
   padding: 6px 12px;
 
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors["purple"]};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors["purple"] : "transparent"};
 `;
 
-export const CategoryBadgeText = styled.Text`
-  color: ${({ theme }) => theme.colors["purple-dark"]};
+export const CategoryBadgeText = styled.Text<BadgeProps>`
+  color: ${({ theme, active }) =>
+    active ? theme.colors["white"] : theme.colors["purple-dark"]};
   font-family: ${({ theme }) => theme.font_family.robotoBold};
   font-size: ${({ theme }) => theme.font_size.tag};
   text-transform: uppercase;
