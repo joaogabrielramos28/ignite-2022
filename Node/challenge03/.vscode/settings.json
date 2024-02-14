@@ -1,0 +1,7 @@
+{
+    "editor.defaultFormatter": null,
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": null
+    },
+}
