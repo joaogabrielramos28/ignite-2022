@@ -27,6 +27,8 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
       whatsApp,
       zipCode,
     })
+
+    return reply.status(201).send()
   } catch (err) {
     if (err instanceof OrgAlreadyExists) {
       return reply.status(409).send({
@@ -36,5 +38,4 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
     throw err
   }
-  return reply.status(201).send()
 }
