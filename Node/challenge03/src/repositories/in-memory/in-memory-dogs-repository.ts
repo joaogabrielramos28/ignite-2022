@@ -1,6 +1,6 @@
 import { Dog, Org, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
-import { DogsRepository } from '../dogs-repository'
+import { DogsRepository, SearchPetsProps } from '../dogs-repository'
 
 export class InMemoryDogsRepository implements DogsRepository {
   public dogs: Dog[] = []
@@ -43,6 +43,14 @@ export class InMemoryDogsRepository implements DogsRepository {
     if (!dogs) {
       return null
     }
+
+    return dogs
+  }
+
+  async findMany({ age, energy, size }: SearchPetsProps) {
+    const dogs = this.dogs.filter(
+      (dog) => dog.age === age || dog.size === size || dog.energy === energy,
+    )
 
     return dogs
   }

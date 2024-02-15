@@ -1,5 +1,5 @@
-import { Org, Prisma } from '@prisma/client'
-import { DogsRepository } from '../dogs-repository'
+import { $Enums, Org, Prisma } from '@prisma/client'
+import { DogsRepository, SearchPetsProps } from '../dogs-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaDogsRepository implements DogsRepository {
@@ -30,6 +30,21 @@ export class PrismaDogsRepository implements DogsRepository {
         },
       },
     })
+    return dogs
+  }
+
+  async findMany({ age, city, energy, size }: SearchPetsProps) {
+    const dogs = prisma.dog.findMany({
+      where: {
+        Org: {
+          address: city,
+        },
+        age,
+        energy,
+        size,
+      },
+    })
+
     return dogs
   }
 }
