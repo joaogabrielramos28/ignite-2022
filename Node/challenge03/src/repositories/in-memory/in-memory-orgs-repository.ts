@@ -41,4 +41,14 @@ export class InMemoryOrgsRepository implements OrgsRepository {
 
     return org
   }
+
+  async getOrgsByCity(city: string) {
+    const orgs = this.orgs.filter((org) => org.address.includes(city))
+
+    if (!orgs) {
+      return null
+    }
+
+    return orgs
+  }
 }

@@ -1,4 +1,4 @@
-import { Dog, Prisma } from '@prisma/client'
+import { Dog, Org, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import { DogsRepository } from '../dogs-repository'
 
@@ -34,5 +34,16 @@ export class InMemoryDogsRepository implements DogsRepository {
     }
 
     return dog
+  }
+
+  async getDogsByOrgs(orgs: Org[]) {
+    const orgsIds = orgs.map((org) => org.id)
+    const dogs = this.dogs.filter((dog) => orgsIds.includes(dog.orgId))
+
+    if (!dogs) {
+      return null
+    }
+
+    return dogs
   }
 }
