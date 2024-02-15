@@ -16,6 +16,12 @@ enum Size {
   LARGE
 }
 
+enum Age {
+  CHILD
+  YOUNG
+  AGED
+}
+
 enum Scale {
   VERY_LOW
   LOW
@@ -28,7 +34,7 @@ model Dog {
   id           String   @id @default(uuid())
   name         String
   about        String
-  age          String
+  age          Age
   size         Size
   energy       Scale
   independent  Scale
@@ -37,8 +43,8 @@ model Dog {
 
   createdAt DateTime @default(now())
 
-  Org   Org?    @relation(fields: [orgId], references: [id])
-  orgId String?
+  Org   Org    @relation(fields: [orgId], references: [id])
+  orgId String
 
   @@map("dogs")
 }
